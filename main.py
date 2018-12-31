@@ -75,7 +75,7 @@ def main(): # {{{1
         return 1
     while True:
         printinfo()
-        con = input('Input yours(press :q to quit): ')
+        con = input('Input yours(input exit to quit): ')
         if con in ('fuck', ':q', 'exit', 'quit()'):
             break
         else:

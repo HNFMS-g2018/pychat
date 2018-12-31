@@ -23,7 +23,8 @@ def printinfo(): # {{{1
     todo.fetch()
     ptr = todo.get('point')
     talk = todo.get('contents')
-    for i in range(ptr+1, 100):
+    size = todo.get('size')
+    for i in range(ptr+1, size):
         print(talk[i])
     for i in range(ptr+1):
         print(talk[i])
@@ -62,12 +63,15 @@ def updateinfo(user, con): # {{{1
     'update information'
     todo.fetch()
     ptr = todo.get('point') + 1
+    times = todo.get('times') + 1
     talk = todo.get('contents')
-    if ptr == 100:
+    size = todo.get('size')
+    if ptr == size:
         ptr = 0
     talk[ptr] = user.get('username') + ' at ' + time.strftime("%D:%H:%M") + ': ' + con
-    todo.set('contents', talk)
     todo.set('point', ptr)
+    todo.set('times', times)
+    todo.set('contents', talk)
     todo.save()
 
 def welcome(): # {{{1

@@ -80,11 +80,11 @@ def welcome(): # {{{1
     'welcome screen'
     print(colorama.Fore.BLUE, end='')
     print('┌─────────────────────────┐')
-    print('│      Welcome !!!        │')
+    print('│        Welcome !!!      │')
     print('│                         │')
     print('│  p   y   c   h   a   t  │')
-    print('│   VERSION:  ', VERSION, '       │')
     print('│                         │')
+    print('│     VERSION:  ', VERSION, '     │')
     print('└─────────────────────────┘')
     info = Notice.create_without_data('5c29d4ab9f5454007005488b')
     info.fetch()

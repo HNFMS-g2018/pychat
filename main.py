@@ -47,7 +47,7 @@ def updateinfo(user, con): # {{{1
     talk = todo.get('contents')
     if ptr == 100:
         ptr = 0
-    talk[ptr] = user.get('username') + ': ' + con
+    talk[ptr] = user.get('username') + ' at ' + time.strftime("%D:%H:%M") + ': ' + con
     todo.set('contents', talk)
     todo.set('point', ptr)
     todo.save()

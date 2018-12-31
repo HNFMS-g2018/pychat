@@ -66,7 +66,7 @@ def welcome(): # {{{1
     print('└────────────────────────┘')
     print(colorama.Style.RESET_ALL)
 
-def main():
+def main(): # {{{1
     'Main function'
     user = leancloud.User()
     welcome()
@@ -81,6 +81,7 @@ def main():
         else:
             updateinfo(user, con)
 
+# }}}1
+
 RES = main()
-os.system("clear")
 exit(RES)

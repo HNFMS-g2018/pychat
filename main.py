@@ -91,6 +91,17 @@ def welcome(): # {{{1
     print(colorama.Fore.RED, 'Notice:\n', info.get('content'))
     print(colorama.Style.RESET_ALL)
 
+def cammond(com): # {{{1
+    'deal with a cammond'
+    res1, res2 = 'null', ''
+    if com in ('quit', 'q', 'exit'):
+        res1, res2 = 'quit', 'You quited!'
+    if com in ('r', 'redarw'):
+        pass
+    else:
+        res2 = 'No such a cammond!'
+    return res1, res2
+
 def main(): # {{{1
     'Main function'
     user = leancloud.User()
@@ -98,15 +109,23 @@ def main(): # {{{1
     if first(user) == 1:
         print('failed')
         return 1
+    caminfo = ''
     while True:
         # os.system("clear")
         printinfo()
-        print('\n')
+        print(caminfo)
         con = input('Input yours(input :q or :exit to quit)$ ')
-        if con in ('fuck', ':q', ':exit'):
-            break
+        comres = 'null'
+        if con == '':
+            caminfo = 'input EMPTY!'
+            continue
+        elif con[0] == ':':
+            comres, caminfo = cammond(con[1:])
         else:
             updateinfo(user, con)
+            caminfo = ''
+        if comres == 'quit':
+            break
 
 # }}}1
 

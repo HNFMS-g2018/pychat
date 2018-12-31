@@ -30,12 +30,12 @@ def first(user): # {{{1
     if choose == '':
         return 'fail'
     if choose[0] == 'l':
-        name = input('User name:')
-        passwd = getpass.getpass('Password:')
+        name = input('User name: ')
+        passwd = getpass.getpass('Password: ')
         user.login(name, passwd)
     elif choose[0] == 'r':
-        name = input('User name:')
-        passwd = getpass.getpass('Password:')
+        name = input('User name: ')
+        passwd = getpass.getpass('Password: ')
         user.set_username(name)
         user.set_password(passwd)
         user.sign_up()
@@ -76,7 +76,7 @@ def main(): # {{{1
     while True:
         printinfo()
         con = input('Input yours(press :q to quit): ')
-        if con in ('fuck', ':q'):
+        if con in ('fuck', ':q', 'exit', 'quit()'):
             break
         else:
             updateinfo(user, con)

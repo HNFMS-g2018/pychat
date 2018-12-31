@@ -9,6 +9,7 @@ leancloud.init("IDDU0rkX0FJ9hi2SFQgP1YIt-gzGzoHsz", "K3zSqgPWAssTN9kyKWDJWG8y")
 colorama.init()
 
 Chat = leancloud.Object.extend('talk')
+Notice = leancloud.Object.extend('notice')
 todo = Chat.create_without_data('5c29b63afb4ffe005fb0de88')
 
 def printinfo(): # {{{1
@@ -61,10 +62,10 @@ def welcome(): # {{{1
     print('│                        │')
     print('│                        │')
     print('└────────────────────────┘')
-    print(colorama.Style.RESET_ALL)
-    info = Chat.create_without_data('5c29b63afb4ffe005fb0de88')
+    info = Notice.create_without_data('5c29d4ab9f5454007005488b')
     info.fetch()
-    print('Notice:\n', info.get('Notice'))
+    print(colorama.Fore.RED, 'Notice:\n', info.get('content'))
+    print(colorama.Style.RESET_ALL)
 
 def main(): # {{{1
     'Main function'

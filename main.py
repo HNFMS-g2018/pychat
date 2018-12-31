@@ -1,3 +1,4 @@
+#!/usr/bin/python3
 import leancloud
 import time
 

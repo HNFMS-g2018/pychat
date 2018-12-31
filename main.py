@@ -4,6 +4,12 @@ import colorama
 import time
 import getpass
 import os
+import argparse
+
+PARSER = argparse.ArgumentParser(description='this is help')
+PARSER.add_argument('-r', '--register', action='store_true', help='register a user')
+PARSER.add_argument('-l', '--login', action='store_true', help='register a user')
+ARGS = PARSER.parse_args()
 
 leancloud.init("IDDU0rkX0FJ9hi2SFQgP1YIt-gzGzoHsz", "K3zSqgPWAssTN9kyKWDJWG8y")
 colorama.init()
@@ -22,23 +28,34 @@ def printinfo(): # {{{1
     for i in range(ptr+1):
         print(talk[i])
 
-def first(user): # {{{1
-    'first join in'
-    choose = input('login or register? ')
-    if choose == '':
-        return 'fail'
-    if choose[0] == 'l':
+def login_register(user, types): # {{{1
+    'get a user'
+    if types == '':
+        return 1
+    if types[0] == 'l':
         name = input('User name: ')
         passwd = getpass.getpass('Password: ')
         user.login(name, passwd)
-    elif choose[0] == 'r':
+    elif types[0] == 'r':
+        print('You\'re register a new user')
         name = input('User name: ')
         passwd = getpass.getpass('Password: ')
         user.set_username(name)
         user.set_password(passwd)
         user.sign_up()
     else:
-        return 'fail'
+        return 1
+
+def first(user): # {{{1
+    'first join in'
+    if ARGS.login:
+        login_register(user, 'login')
+    elif ARGS.register:
+        login_register(user, 'register')
+    else:
+        choose = input('login or register? ')
+        return login_register(user, choose)
+    return 0
 
 def updateinfo(user, con): # {{{1
     'update information'
@@ -71,7 +88,7 @@ def main(): # {{{1
     'Main function'
     user = leancloud.User()
     welcome()
-    if first(user) == 'fail':
+    if first(user) == 1:
         print('failed')
         return 1
     while True:

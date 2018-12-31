@@ -26,10 +26,13 @@ def printinfo(): # {{{1
     talk = todo.get('contents')
     size = todo.get('size')
     for i in range(ptr+1, size):
-        print(talk[i])
+        if len(talk[i]) == 3:
+            print(colorama.Fore.BLUE, talk[i][0], colorama.Style.RESET_ALL, \
+                talk[i][1], ': ', talk[i][2])
     for i in range(ptr+1):
-        if talk[i]:
-            print(talk[i])
+        if len(talk[i]) == 3:
+            print(colorama.Fore.BLUE, talk[i][0], colorama.Style.RESET_ALL, \
+                talk[i][1], ': ', talk[i][2])
 
 def login_register(user, types): # {{{1
     'get a user'
@@ -70,7 +73,7 @@ def updateinfo(user, con): # {{{1
     size = todo.get('size')
     if ptr == size:
         ptr = 0
-    talk[ptr] = user.get('username') + ' at ' + time.strftime("%D:%H:%M") + ': ' + con
+    talk[ptr] = [user.get('username'), time.strftime("%D:%H:%M"), con]
     todo.set('point', ptr)
     todo.set('times', times)
     todo.set('contents', talk)
@@ -80,11 +83,11 @@ def welcome(): # {{{1
     'welcome screen'
     print(colorama.Fore.BLUE, end='')
     print('┌─────────────────────────┐')
-    print('│      Welcome !!!        │')
+    print('│        Welcome !!!      │')
     print('│                         │')
     print('│  p   y   c   h   a   t  │')
-    print('│   VERSION:  ', VERSION, '       │')
     print('│                         │')
+    print('│     VERSION:  ', VERSION, '     │')
     print('└─────────────────────────┘')
     info = Notice.create_without_data('5c29d4ab9f5454007005488b')
     info.fetch()
@@ -96,7 +99,7 @@ def cammond(com): # {{{1
     res1, res2 = 'null', ''
     if com in ('quit', 'q', 'exit'):
         res1, res2 = 'quit', 'You quited!'
-    if com in ('r', 'redarw'):
+    if com in ('w', 'who'):
         pass
     else:
         res2 = 'No such a cammond!'

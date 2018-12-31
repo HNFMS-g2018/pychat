@@ -2,6 +2,8 @@
 import leancloud
 import colorama
 import time
+import getpass
+import os
 
 leancloud.init("IDDU0rkX0FJ9hi2SFQgP1YIt-gzGzoHsz", "K3zSqgPWAssTN9kyKWDJWG8y")
 colorama.init()
@@ -29,11 +31,11 @@ def first(user): # {{{1
         return 'fail'
     if choose[0] == 'l':
         name = input('User name:')
-        passwd = input('Password:')
+        passwd = getpass.getpass('Password:')
         user.login(name, passwd)
     elif choose[0] == 'r':
         name = input('User name:')
-        passwd = input('Password:')
+        passwd = getpass.getpass('Password:')
         user.set_username(name)
         user.set_password(passwd)
         user.sign_up()
@@ -64,7 +66,7 @@ def welcome(): # {{{1
     print('└────────────────────────┘')
     print(colorama.Style.RESET_ALL)
 
-def main(): # {{{1
+def main():
     'Main function'
     user = leancloud.User()
     welcome()
@@ -79,7 +81,6 @@ def main(): # {{{1
         else:
             updateinfo(user, con)
 
-# }}}1
-
 RES = main()
+os.system("clear")
 exit(RES)

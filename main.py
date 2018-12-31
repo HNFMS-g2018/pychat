@@ -23,9 +23,6 @@ def printinfo(): # {{{1
 
 def first(user): # {{{1
     'first join in'
-    info = Chat.create_without_data('5c29b63afb4ffe005fb0de88')
-    info.fetch()
-    print('Notice:\n', info.get('content'))
     choose = input('login or register? ')
     if choose == '':
         return 'fail'
@@ -65,6 +62,9 @@ def welcome(): # {{{1
     print('│                        │')
     print('└────────────────────────┘')
     print(colorama.Style.RESET_ALL)
+    info = Chat.create_without_data('5c29b63afb4ffe005fb0de88')
+    info.fetch()
+    print('Notice:\n', info.get('Notice'))
 
 def main(): # {{{1
     'Main function'

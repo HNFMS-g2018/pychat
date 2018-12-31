@@ -23,10 +23,14 @@ def printinfo(): # {{{1
     todo.fetch()
     ptr = todo.get('point')
     talk = todo.get('contents')
+    for i in range(100):
+        print('\n')
     for i in range(ptr+1, 100):
-        print(talk[i])
+        if talk[i]:
+            print(talk[i])
     for i in range(ptr+1):
-        print(talk[i])
+        if talk[i]:
+            print(talk[i])
 
 def login_register(user, types): # {{{1
     'get a user'
@@ -92,8 +96,10 @@ def main(): # {{{1
         print('failed')
         return 1
     while True:
+        os.system("clear")
         printinfo()
-        con = input('Input yours(input :q or :exit to quit): ')
+        print('\n')
+        con = input('Input yours(input :q or :exit to quit)$ ')
         if con in ('fuck', ':q', ':exit'):
             break
         else:
@@ -102,4 +108,5 @@ def main(): # {{{1
 # }}}1
 
 RES = main()
+os.system("clear")
 exit(RES)

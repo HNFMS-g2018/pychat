@@ -1,10 +1,10 @@
 #!/usr/bin/python3
-import leancloud
-import colorama
+'Pychat!'
 import time
 import getpass
-import os
 import argparse
+import colorama
+import leancloud
 
 PARSER = argparse.ArgumentParser(description='this is help')
 PARSER.add_argument('-r', '--register', action='store_true', help='register a user')
@@ -45,6 +45,7 @@ def login_register(user, types): # {{{1
         user.sign_up()
     else:
         return 1
+    return 0
 
 def first(user): # {{{1
     'first join in'

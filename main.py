@@ -2,10 +2,10 @@
 import leancloud
 import time
 
-leancloud.init("ULc6VQsRiQr4NENpfoJpfd52-gzGzoHsz", "iYA2I9QBd6SJ1fwGOQxceyQD")
+leancloud.init("IDDU0rkX0FJ9hi2SFQgP1YIt-gzGzoHsz", "K3zSqgPWAssTN9kyKWDJWG8y")
 
-Chat = leancloud.Object.extend('chat')
-todo = Chat.create_without_data('5c28b8dd9f54540070f86b74')
+Chat = leancloud.Object.extend('talk')
+todo = Chat.create_without_data('5c29b63afb4ffe005fb0de88')
 
 def printinfo(): # {{{1
     'print infomation'
@@ -19,7 +19,7 @@ def printinfo(): # {{{1
 
 def first(user): # {{{1
     'first join in'
-    info = Chat.create_without_data('5c28b709fb4ffe005fa5c1bc')
+    info = Chat.create_without_data('5c29b63afb4ffe005fb0de88')
     info.fetch()
     print('Notice:\n', info.get('content'))
     choose = input('login or register? ')
@@ -58,7 +58,7 @@ def main(): # {{{1
         return 1
     while True:
         printinfo()
-        con = input('Input yours(press :q): ')
+        con = input('Input yours(press :q to quit): ')
         if con in ('fuck', ':q'):
             break
         else:

@@ -6,6 +6,7 @@ import argparse
 import colorama
 import leancloud
 
+VERSION = 1.0
 PARSER = argparse.ArgumentParser(description='this is help')
 PARSER.add_argument('-r', '--register', action='store_true', help='register a user')
 PARSER.add_argument('-l', '--login', action='store_true', help='register a user')
@@ -24,11 +25,8 @@ def printinfo(): # {{{1
     ptr = todo.get('point')
     talk = todo.get('contents')
     size = todo.get('size')
-    for i in range(100):
-        print('\n')
     for i in range(ptr+1, size):
-        if talk[i]:
-            print(talk[i])
+        print(talk[i])
     for i in range(ptr+1):
         if talk[i]:
             print(talk[i])
@@ -42,7 +40,7 @@ def login_register(user, types): # {{{1
         passwd = getpass.getpass('Password: ')
         user.login(name, passwd)
     elif types[0] == 'r':
-        print('You\'re register a new user')
+        print('You\'re registering a new user')
         name = input('User name: ')
         passwd = getpass.getpass('Password: ')
         user.set_username(name)

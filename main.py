@@ -58,8 +58,8 @@ def main(): # {{{1
         return 1
     while True:
         printinfo()
-        con = input('Input yours(press :q to quit): ')
-        if con in ('quit', 'fuck', ':q'):
+        con = input('Input yours(press :q): ')
+        if con in ('fuck', ':q'):
             break
         else:
             updateinfo(user, con)

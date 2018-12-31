@@ -1,8 +1,10 @@
 #!/usr/bin/python3
 import leancloud
+import colorama
 import time
 
 leancloud.init("IDDU0rkX0FJ9hi2SFQgP1YIt-gzGzoHsz", "K3zSqgPWAssTN9kyKWDJWG8y")
+colorama.init()
 
 Chat = leancloud.Object.extend('talk')
 todo = Chat.create_without_data('5c29b63afb4ffe005fb0de88')
@@ -50,9 +52,22 @@ def updateinfo(user, con): # {{{1
     todo.set('point', ptr)
     todo.save()
 
+def welcome(): # {{{1
+    'welcome screen'
+    print(colorama.Fore.BLUE, end='')
+    print('┌────────────────────────┐')
+    print('│      Welcome !!!       │')
+    print('│                        │')
+    print('│  p   y   c   h   a   t │')
+    print('│                        │')
+    print('│                        │')
+    print('└────────────────────────┘')
+    print(colorama.Style.RESET_ALL)
+
 def main(): # {{{1
     'Main function'
     user = leancloud.User()
+    welcome()
     if first(user) == 'fail':
         print('failed')
         return 1

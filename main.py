@@ -6,10 +6,10 @@ import argparse
 import colorama
 import leancloud as AV
 
-VERSION = 1.0
+VERSION = 1.1
 PARSER = argparse.ArgumentParser(description='this is help')
 PARSER.add_argument('-r', '--register', action='store_true', help='register a user')
-PARSER.add_argument('-l', '--login', action='store_true', help='register a user')
+PARSER.add_argument('-l', '--login', action='store_true', help='login a user')
 ARGS = PARSER.parse_args()
 
 AV.init("IDDU0rkX0FJ9hi2SFQgP1YIt-gzGzoHsz", "K3zSqgPWAssTN9kyKWDJWG8y")
@@ -99,8 +99,10 @@ def cammond(com): # {{{1
     res1, res2 = 'null', ''
     if com in ('quit', 'q', 'exit'):
         res1, res2 = 'quit', 'You quited!'
-    if com in ('w', 'who'):
+    elif com in ('w', 'who'):
         pass
+    elif com in ('h', 'help'):
+        res2 = 'No help!!! It\'s easy enough!!!'
     else:
         res2 = 'No such a cammond!'
     return res1, res2

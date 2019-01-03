@@ -3,10 +3,14 @@
 import time
 import getpass
 import argparse
+import os
 import colorama
 import leancloud as AV
+import yaml
 
-VERSION = 1.1
+VERSION = 1.2
+CONFIGDIR = os.path.expandvars('$HOME') + '/.config/pychat/'
+
 PARSER = argparse.ArgumentParser(description='this is help')
 PARSER.add_argument('-r', '--register', action='store_true', help='register a user')
 PARSER.add_argument('-l', '--login', action='store_true', help='login a user')
@@ -18,6 +22,7 @@ colorama.init()
 Chat = AV.Object.extend('talk')
 Notice = AV.Object.extend('notice')
 todo = Chat.create_without_data('5c29b63afb4ffe005fb0de88')
+config = yaml.load(open(CONFIGDIR + 'init.yaml'))
 
 def printinfo(): # {{{1
     'print infomation'
@@ -59,6 +64,8 @@ def first(user): # {{{1
         login_register(user, 'login')
     elif ARGS.register:
         login_register(user, 'register')
+    elif config.get('name') and config.get('pass'):
+        user.login(config['name'], config['pass'])
     else:
         choose = input('login or register? ')
         return login_register(user, choose)
@@ -134,6 +141,7 @@ def main(): # {{{1
 
 # }}}1
 
-RES = main()
-# os.system("clear")
-exit(RES)
+if __name__ == '__main__':
+    res = main()
+    # os.system("clear")
+    exit(res)

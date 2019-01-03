@@ -4,7 +4,7 @@ import time
 import getpass
 import argparse
 import colorama
-import leancloud
+import leancloud as AV
 
 VERSION = 1.0
 PARSER = argparse.ArgumentParser(description='this is help')
@@ -12,11 +12,11 @@ PARSER.add_argument('-r', '--register', action='store_true', help='register a us
 PARSER.add_argument('-l', '--login', action='store_true', help='register a user')
 ARGS = PARSER.parse_args()
 
-leancloud.init("IDDU0rkX0FJ9hi2SFQgP1YIt-gzGzoHsz", "K3zSqgPWAssTN9kyKWDJWG8y")
+AV.init("IDDU0rkX0FJ9hi2SFQgP1YIt-gzGzoHsz", "K3zSqgPWAssTN9kyKWDJWG8y")
 colorama.init()
 
-Chat = leancloud.Object.extend('talk')
-Notice = leancloud.Object.extend('notice')
+Chat = AV.Object.extend('talk')
+Notice = AV.Object.extend('notice')
 todo = Chat.create_without_data('5c29b63afb4ffe005fb0de88')
 
 def printinfo(): # {{{1
@@ -107,7 +107,7 @@ def cammond(com): # {{{1
 
 def main(): # {{{1
     'Main function'
-    user = leancloud.User()
+    user = AV.User()
     welcome()
     if first(user) == 1:
         print('failed')

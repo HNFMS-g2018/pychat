@@ -147,6 +147,13 @@ def main(): # {{{1
 # }}}1
 
 if __name__ == '__main__':
-    res = main()
-    # os.system("clear")
-    exit(res)
+    try:
+        res = main()
+        # os.system("clear")
+        exit(res)
+    except EOFError as err:
+        print(colorama.Fore.RED)
+        print('Unexcept EOF!', colorama.Style.RESET_ALL)
+    except KeyboardInterrupt as err:
+        print(colorama.Fore.RED)
+        print('Unexcept Ctrl-C!', colorama.Style.RESET_ALL)

@@ -114,7 +114,13 @@ def cammond(com): # {{{1
     elif com in ('w', 'who'):
         pass
     elif com in ('h', 'help'):
-        res2 = 'No help!!! It\'s easy enough!!!'
+        res2 = 'This is help message:\n \
+                use q[uit] to quit\n \
+                use h[elp] to get help\n \
+                use e[dit] to edit configuration file\n'
+    elif com in ('e', 'edit'):
+        os.system('edit ~/.config/pychat/init.yaml')
+        res2 = 'editing'
     else:
         res2 = 'No such a cammond!'
     return res1, res2
@@ -154,6 +160,8 @@ if __name__ == '__main__':
     except EOFError as err:
         print(colorama.Fore.RED)
         print('Unexcept EOF!', colorama.Style.RESET_ALL)
+        exit(1)
     except KeyboardInterrupt as err:
         print(colorama.Fore.RED)
         print('Unexcept Ctrl-C!', colorama.Style.RESET_ALL)
+        exit(1)

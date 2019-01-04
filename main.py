@@ -109,7 +109,7 @@ def welcome(): # {{{1
 def cammond(com): # {{{1
     'deal with a cammond'
     res1, res2 = 'null', ''
-    if com in ('quit', 'q', 'exit'):
+    if com in ('quit', 'q'):
         res1, res2 = 'quit', 'You quited!'
     elif com in ('w', 'who'):
         pass
@@ -137,7 +137,7 @@ def main(): # {{{1
         # os.system("clear")
         printinfo()
         print(caminfo)
-        con = input('Input yours(input :q or :exit to quit)$ ')
+        con = input('Input yours(input :h to get help)$ ')
         comres = 'null'
         if con == '':
             caminfo = 'input EMPTY!'

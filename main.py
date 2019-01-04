@@ -60,7 +60,7 @@ def login_register(user, types): # {{{1
     except AV.errors.LeanCloudError as err:
         print('error!')
         print(colorama.Fore.RED, err, colorama.Style.RESET_ALL)
-        exit(1)
+        exit(2)
     return 0
 
 def first(user): # {{{1
@@ -164,4 +164,8 @@ if __name__ == '__main__':
     except KeyboardInterrupt as err:
         print(colorama.Fore.RED)
         print('Unexcept Ctrl-C!', colorama.Style.RESET_ALL)
+        exit(1)
+    except TypeError as err:
+        print(colorama.Fore.RED)
+        print(err, colorama.Style.RESET_ALL)
         exit(1)

@@ -41,21 +41,26 @@ def printinfo(): # {{{1
 
 def login_register(user, types): # {{{1
     'get a user'
-    if types == '':
-        return 1
-    if types[0] == 'l':
-        name = input('User name: ')
-        passwd = getpass.getpass('Password: ')
-        user.login(name, passwd)
-    elif types[0] == 'r':
-        print('You\'re registering a new user')
-        name = input('User name: ')
-        passwd = getpass.getpass('Password: ')
-        user.set_username(name)
-        user.set_password(passwd)
-        user.sign_up()
-    else:
-        return 1
+    try:
+        if types == '':
+            return 1
+        if types[0] == 'l':
+            name = input('User name: ')
+            passwd = getpass.getpass('Password: ')
+            user.login(name, passwd)
+        elif types[0] == 'r':
+            print('You\'re registering a new user')
+            name = input('User name: ')
+            passwd = getpass.getpass('Password: ')
+            user.set_username(name)
+            user.set_password(passwd)
+            user.sign_up()
+        else:
+            return 1
+    except AV.errors.LeanCloudError as err:
+        print('error!')
+        print(colorama.Fore.RED, err, colorama.Style.RESET_ALL)
+        exit(1)
     return 0
 
 def first(user): # {{{1

@@ -3,7 +3,7 @@ pips=pip/argparse.lock pip/colorama.lock pip/leancloud.lock pip/yaml.lock
 all: $(pips) /usr/bin/pychat ~/.config/pychat/lock
 	echo -e '\033[32minstalled\033[0m!!'
 
-/usr/bin/pychat: main.py
+/usr/bin/pychat: main.py _*py
 	touch pychat
 	echo '#!/bin/bash' > pychat
 	echo -n 'dir=' >> pychat

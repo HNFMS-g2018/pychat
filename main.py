@@ -5,13 +5,15 @@ import os
 import colorama
 import leancloud as AV
 import yaml
+import threading
 import _user
 import _args
+import _messagebox
 
 AV.init("IDDU0rkX0FJ9hi2SFQgP1YIt-gzGzoHsz", "K3zSqgPWAssTN9kyKWDJWG8y")
 colorama.init()
 
-VERSION = 1.2
+VERSION = 1.3
 CONFIGDIR = os.path.expandvars('$HOME') + '/.config/pychat/'
 ARGS = _args.init()
 Chat = AV.Object.extend('talk')
@@ -33,6 +35,18 @@ def printinfo(): # {{{1
         if len(talk[i]) == 3:
             print(colorama.Fore.BLUE, talk[i][0], colorama.Style.RESET_ALL, \
                 talk[i][1], ': ', talk[i][2])
+
+def monitor(): # {{{1
+    'listening for new messages'
+    last = 0
+    while True:
+        todo.fetch()
+        times = todo.get('times')
+        if last == 0:
+            last = times
+        elif times > last:
+            _messagebox.info('New message!')
+            last = times
 
 def updateinfo(user, con): # {{{1
     'update information'
@@ -87,6 +101,7 @@ def main(): # {{{1
     'Main function'
     user = AV.User()
     welcome()
+    threading._start_new_thread(monitor, ())
     if _user.init(user, ARGS, config) == 1:
         print('failed')
         return 1

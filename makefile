@@ -4,7 +4,12 @@ all: $(pips) /usr/bin/pychat ~/.config/pychat/lock
 	echo -e '\033[32minstalled\033[0m!!'
 
 /usr/bin/pychat: main.py
-	cp main.py pychat
+	touch pychat
+	echo '#!/bin/bash' > pychat
+	echo -n 'dir=' >> pychat
+	pwd >> pychat
+	echo 'python3 $$dir/main.py $$@' >> pychat
+	# cp main.py pychat
 	chmod +x pychat
 	sudo mv pychat /usr/bin/pychat
 

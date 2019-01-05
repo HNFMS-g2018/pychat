@@ -21,7 +21,7 @@ class Monitor(threading.Thread):
             if self.last == 0:
                 self.last = times
             elif times > self.last:
-                _messagebox.info('New message!')
+                _messagebox.info(str(times-self.last) + ' new messages!')
                 self.last = times
             endtime = time.time() + 60
             while not self.stoped and time.time() < endtime:
@@ -29,7 +29,7 @@ class Monitor(threading.Thread):
 
     def send(self): # {{{2
         'to tell the monitor to do nothing'
-        self.last -= 1
+        self.last += 1
 
     def tostop(self): # {{{2
         'to stop running'

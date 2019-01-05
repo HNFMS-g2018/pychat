@@ -14,12 +14,12 @@ CONFIGDIR = os.path.expandvars('$HOME') + '/.config/pychat/'
 ARGS = _args.init()
 Chat = AV.Object.extend('talk')
 Notice = AV.Object.extend('notice')
-# todo = Chat.create_without_data('5c29b63afb4ffe005fb0de88')
-todo = Chat.create_without_data('5c30264bfb4ffe005fd22a11')
+todo = Chat.create_without_data('5c29b63afb4ffe005fb0de88')
+# todo = Chat.create_without_data('5c30264bfb4ffe005fd22a11')
 config = yaml.load(open(CONFIGDIR + 'init.yaml'))
 
-# AV.init("IDDU0rkX0FJ9hi2SFQgP1YIt-gzGzoHsz", "K3zSqgPWAssTN9kyKWDJWG8y")
-AV.init('ULc6VQsRiQr4NENpfoJpfd52-gzGzoHsz', 'iYA2I9QBd6SJ1fwGOQxceyQD')
+AV.init("IDDU0rkX0FJ9hi2SFQgP1YIt-gzGzoHsz", "K3zSqgPWAssTN9kyKWDJWG8y")
+# AV.init('ULc6VQsRiQr4NENpfoJpfd52-gzGzoHsz', 'iYA2I9QBd6SJ1fwGOQxceyQD')
 colorama.init()
 
 def printinfo(): # {{{1
@@ -51,6 +51,7 @@ def updateinfo(user, con): # {{{1
     todo.set('times', times)
     todo.set('contents', talk)
     todo.save()
+    MON.send()
 
 def welcome(): # {{{1
     'welcome screen'
@@ -62,8 +63,8 @@ def welcome(): # {{{1
     print('│                         │')
     print('│     VERSION:  ', VERSION, '     │')
     print('└─────────────────────────┘')
-    # info = Notice.create_without_data('5c29d4ab9f5454007005488b')
-    info = Notice.create_without_data('5c3025e667f35600631c87d0')
+    info = Notice.create_without_data('5c29d4ab9f5454007005488b')
+    # info = Notice.create_without_data('5c3025e667f35600631c87d0')
     info.fetch()
     print(colorama.Fore.RED, 'Notice:\n', info.get('content'))
     print(colorama.Style.RESET_ALL)
@@ -79,7 +80,7 @@ def cammond(comms): # {{{1
     'deal with a cammond'
     res1, res2 = 'null', ''
     comms = comms.split(' ')
-    if len(comms) == 0:
+    if comms == []:
         return res1, res2
     com = comms[0]
     if com in ('quit', 'q'):
@@ -127,29 +128,29 @@ def main(): # {{{1
 
 if __name__ == '__main__': # {{{1
     try:
-        mon = _monitor.Monitor(todo)
-        mon.start()
+        MON = _monitor.Monitor(todo)
+        MON.start()
         res = main()
-        mon.tostop()
-        mon.join()
+        MON.tostop()
+        MON.join()
         exit(res)
     except EOFError as err:
         print(colorama.Fore.RED)
         print('Unexcept EOF!', colorama.Style.RESET_ALL)
-        mon.tostop()
-        mon.join()
+        MON.tostop()
+        MON.join()
         exit(1)
     except KeyboardInterrupt as err:
         print(colorama.Fore.RED)
         print('Unexcept Ctrl-C!', colorama.Style.RESET_ALL)
-        mon.tostop()
-        mon.join()
+        MON.tostop()
+        MON.join()
         exit(1)
     except TypeError as err:
         print(colorama.Fore.RED)
         print(err, colorama.Style.RESET_ALL)
-        mon.tostop()
-        mon.join()
+        MON.tostop()
+        MON.join()
         exit(1)
 
 # }}}1

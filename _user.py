@@ -1,4 +1,5 @@
 'User do'
+import readline
 import getpass
 import colorama
 import leancloud as AV

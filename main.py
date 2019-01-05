@@ -1,5 +1,6 @@
 #!/usr/bin/python3
 'Pychat!'
+import readline
 import time
 import os
 import colorama
@@ -14,12 +15,12 @@ CONFIGDIR = os.path.expandvars('$HOME') + '/.config/pychat/'
 ARGS = _args.init()
 Chat = AV.Object.extend('talk')
 Notice = AV.Object.extend('notice')
-todo = Chat.create_without_data('5c29b63afb4ffe005fb0de88')
-# todo = Chat.create_without_data('5c30264bfb4ffe005fd22a11')
+# todo = Chat.create_without_data('5c29b63afb4ffe005fb0de88')
+todo = Chat.create_without_data('5c30264bfb4ffe005fd22a11')
 config = yaml.load(open(CONFIGDIR + 'init.yaml'))
 
-AV.init("IDDU0rkX0FJ9hi2SFQgP1YIt-gzGzoHsz", "K3zSqgPWAssTN9kyKWDJWG8y")
-# AV.init('ULc6VQsRiQr4NENpfoJpfd52-gzGzoHsz', 'iYA2I9QBd6SJ1fwGOQxceyQD')
+# AV.init("IDDU0rkX0FJ9hi2SFQgP1YIt-gzGzoHsz", "K3zSqgPWAssTN9kyKWDJWG8y")
+AV.init('ULc6VQsRiQr4NENpfoJpfd52-gzGzoHsz', 'iYA2I9QBd6SJ1fwGOQxceyQD')
 colorama.init()
 
 def printinfo(): # {{{1
@@ -63,8 +64,8 @@ def welcome(): # {{{1
     print('│                         │')
     print('│     VERSION:  ', VERSION, '     │')
     print('└─────────────────────────┘')
-    info = Notice.create_without_data('5c29d4ab9f5454007005488b')
-    # info = Notice.create_without_data('5c3025e667f35600631c87d0')
+    # info = Notice.create_without_data('5c29d4ab9f5454007005488b')
+    info = Notice.create_without_data('5c3025e667f35600631c87d0')
     info.fetch()
     print(colorama.Fore.RED, 'Notice:\n', info.get('content'))
     print(colorama.Style.RESET_ALL)

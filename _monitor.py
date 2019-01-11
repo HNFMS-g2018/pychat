@@ -3,7 +3,7 @@ import threading
 import time
 import _messagebox
 
-class Monitor(threading.Thread):
+class Monitor(threading.Thread): # {{{1
     'a Monitor'
     # last = 0
     # todo = None
@@ -34,3 +34,4 @@ class Monitor(threading.Thread):
     def tostop(self): # {{{2
         'to stop running'
         self.stoped = True
+        self.join()

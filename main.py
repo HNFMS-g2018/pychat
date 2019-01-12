@@ -31,11 +31,17 @@ def printinfo(): # {{{1
     size = todo.get('size')
     for i in range(ptr+1, size):
         if len(talk[i]) == 3:
-            print(colorama.Fore.BLUE, talk[i][0], colorama.Style.RESET_ALL, \
+            color = colorama.Fore.BLUE
+            if talk[i][0] == 'root':
+                color = colorama.Fore.RED
+            print(color, talk[i][0], colorama.Style.RESET_ALL, \
                 talk[i][1], ': ', talk[i][2])
     for i in range(ptr+1):
         if len(talk[i]) == 3:
-            print(colorama.Fore.BLUE, talk[i][0], colorama.Style.RESET_ALL, \
+            color = colorama.Fore.BLUE
+            if talk[i][0] == 'root':
+                color = colorama.Fore.RED
+            print(color, talk[i][0], colorama.Style.RESET_ALL, \
                 talk[i][1], ': ', talk[i][2])
 
 def updateinfo(user, con, lasttime): # {{{1
@@ -60,6 +66,22 @@ def updateinfo(user, con, lasttime): # {{{1
     todo.save()
     MON.send()
     return nowtime
+
+def updatesysinfo(con): # {{{1
+    'update system information'
+    todo.fetch()
+    ptr = todo.get('point') + 1
+    times = todo.get('times') + 1
+    talk = todo.get('contents')
+    size = todo.get('size')
+    if ptr == size:
+        ptr = 0
+    talk[ptr] = ['root', time.strftime("%D:%H:%M"), con]
+    todo.set('point', ptr)
+    todo.set('times', times)
+    todo.set('contents', talk)
+    todo.save()
+    MON.send()
 
 def welcome(): # {{{1
     'welcome screen'
@@ -118,6 +140,7 @@ def main(): # {{{1
         return 1
     caminfo = ''
     lasttime = time.time()
+    updatesysinfo(user.get('username') + ' join chat room!')
     while True:
         # os.system("clear")
         printinfo()
@@ -134,28 +157,29 @@ def main(): # {{{1
             caminfo = ''
         if comres == 'quit':
             break
+    updatesysinfo(user.get('username') + ' quit chat room!')
+
+def toexit(res, mon): # {{{1
+    mon.tostop()
+    exit(res)
 
 if __name__ == '__main__': # {{{1
     try:
+        # os.system('cd ~/.config/pychat/upstream/; git pull; make;')
         MON = _monitor.Monitor(todo)
         MON.start()
-        res = main()
-        MON.tostop()
-        exit(res)
+        toexit(main(), MON)
     except EOFError as err:
         print(colorama.Fore.RED)
         print('Unexcept EOF!', colorama.Style.RESET_ALL)
-        MON.tostop()
-        exit(1)
+        toexit(1, MON)
     except KeyboardInterrupt as err:
         print(colorama.Fore.RED)
         print('Unexcept Ctrl-C!', colorama.Style.RESET_ALL)
-        MON.tostop()
-        exit(1)
+        toexit(1, MON)
     except TypeError as err:
         print(colorama.Fore.RED)
         print(err, colorama.Style.RESET_ALL)
-        MON.tostop()
-        exit(1)
+        toexit(1, MON)
 
 # }}}1

@@ -57,6 +57,8 @@ def updateinfo(user, con, lasttime): # {{{1
     times = todo.get('times') + 1
     talk = todo.get('contents')
     size = todo.get('size')
+    while len(talk) < size:
+        talk.append([])
     if ptr == size:
         ptr = 0
     talk[ptr] = [user.get('username'), time.strftime("%D:%H:%M"), con]
@@ -74,6 +76,8 @@ def updatesysinfo(con): # {{{1
     times = todo.get('times') + 1
     talk = todo.get('contents')
     size = todo.get('size')
+    while len(talk) < size:
+        talk.append([])
     if ptr == size:
         ptr = 0
     talk[ptr] = ['root', time.strftime("%D:%H:%M"), con]

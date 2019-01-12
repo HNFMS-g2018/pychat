@@ -38,8 +38,14 @@ def printinfo(): # {{{1
             print(colorama.Fore.BLUE, talk[i][0], colorama.Style.RESET_ALL, \
                 talk[i][1], ': ', talk[i][2])
 
-def updateinfo(user, con): # {{{1
+def updateinfo(user, con, lasttime): # {{{1
     'update information'
+    nowtime = time.time()
+    if nowtime < lasttime + 1:
+        print(colorama.Fore.RED, 'input too fast!!!\n', \
+                'please wait at lease one second!', colorama.Style.RESET_ALL)
+        time.sleep(1)
+        return time.time()
     todo.fetch()
     ptr = todo.get('point') + 1
     times = todo.get('times') + 1
@@ -53,6 +59,7 @@ def updateinfo(user, con): # {{{1
     todo.set('contents', talk)
     todo.save()
     MON.send()
+    return nowtime
 
 def welcome(): # {{{1
     'welcome screen'
@@ -110,6 +117,7 @@ def main(): # {{{1
         print('failed')
         return 1
     caminfo = ''
+    lasttime = time.time()
     while True:
         # os.system("clear")
         printinfo()
@@ -122,7 +130,7 @@ def main(): # {{{1
         elif con[0] == ':':
             comres, caminfo = cammond(con[1:])
         else:
-            updateinfo(user, con)
+            lasttime = updateinfo(user, con, lasttime)
             caminfo = ''
         if comres == 'quit':
             break

@@ -141,22 +141,26 @@ def main(): # {{{1
     caminfo = ''
     lasttime = time.time()
     updatesysinfo(user.get('username') + ' join chat room!')
-    while True:
-        # os.system("clear")
-        printinfo()
-        print(caminfo)
-        con = input('Input yours(input :h to get help)$ ')
-        comres = 'null'
-        if con == '':
-            caminfo = 'input EMPTY!'
-            continue
-        elif con[0] == ':':
-            comres, caminfo = cammond(con[1:])
-        else:
-            lasttime = updateinfo(user, con, lasttime)
-            caminfo = ''
-        if comres == 'quit':
-            break
+    try:
+        while True:
+            # os.system("clear")
+            printinfo()
+            print(caminfo)
+            con = input('Input yours(input :h to get help)$ ')
+            comres = 'null'
+            if con == '':
+                caminfo = 'input EMPTY!'
+                continue
+            elif con[0] == ':':
+                comres, caminfo = cammond(con[1:])
+            else:
+                lasttime = updateinfo(user, con, lasttime)
+                caminfo = ''
+            if comres == 'quit':
+                break
+    except:
+        updatesysinfo(user.get('username') + ' quit chat room!')
+        raise
     updatesysinfo(user.get('username') + ' quit chat room!')
 
 def toexit(res, mon): # {{{1

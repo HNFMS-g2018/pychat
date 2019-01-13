@@ -10,7 +10,7 @@ import _args
 import _curse
 import _room
 
-VERSION = 1.4
+VERSION = 1.5
 CONFIGDIR = os.path.expandvars('$HOME') + '/.config/pychat/'
 ARGS = _args.init()
 Chat = AV.Object.extend('talk')
@@ -46,8 +46,8 @@ def cammond(comms): # {{{1
     if com in ('quit', 'q'):
         res1, res2 = 'quit', 'You quited!'
     elif com in ('w', 'who'):
-        pass
-    elif com in ('p', 'print'):
+        res1 = 'who'
+    elif com in ('p', 'printall'):
         res1 = 'printall'
     elif com in ('h', 'help'):
         res2 = 'This is help message:\n \
@@ -82,6 +82,8 @@ def main(): # {{{1
             room.printnew()
         if caminfo != '':
             print(caminfo)
+        if camres == 'who':
+            print(room.user_list())
         con = input('Input yours(input :h to get help)$ ')
         _curse.cup(1)
         print('                                                                                ')

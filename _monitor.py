@@ -18,6 +18,7 @@ class Monitor(threading.Thread): # {{{1
         while not self.stoped:
             self.todo.fetch()
             times = self.todo.get('times')
+            # _messagebox.info(str(times) + 'vs' + str(self.last))
             if self.last == 0:
                 self.last = times
             elif times > self.last:
@@ -29,7 +30,8 @@ class Monitor(threading.Thread): # {{{1
 
     def send(self): # {{{2
         'to tell the monitor to do nothing'
-        self.last += 1
+        self.todo.fetch()
+        self.last = self.todo.get('times')
 
     def tostop(self): # {{{2
         'to stop running'

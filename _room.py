@@ -66,14 +66,13 @@ class ChatRoom:
 
     def send(self, content):
         'send [content] to the chat room'
-        nowtime = time.time()
-        if nowtime < self.lastsend + 1:
+        if time.time() < self.lastsend + 1:
             print(colorama.Fore.RED, 'input too fast!!!\n', \
                     'please wait at lease one second!', colorama.Style.RESET_ALL)
             time.sleep(1)
         else:
             self.__send(self.user.get('username'), content)
-        self.lastsend = nowtime
+        self.lastsend = time.time()
 
 def make_content(username, content):
     'make [content] a message'

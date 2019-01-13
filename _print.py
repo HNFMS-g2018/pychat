@@ -4,50 +4,36 @@ import colorama
 class Printer:
     'To print something'
     def __init__(self):
-        self.last_month = 0
-        self.last_day = 0
-        self.last_hour = 0
-        self.last_minute = 0
-    def __upd_month(self, content):
-        self.last_month = content[0]
-        self.__upd_day(content)
-    def __upd_day(self, content):
-        self.last_day = content[1]
-        self.__upd_hour(content)
-    def __upd_hour(self, content):
-        self.last_hour = content[2]
-        self.__upd_minute(content)
-    def __upd_minute(self, content):
-        self.last_minute = content[3]
+        self.last_time = [0, 0, 0, 0,]
+        self.allow = [0, 0, 0, 2,]
+        self.time_size = 4
+    def __upd_time(self, content, now):
+        self.last_time[now] = content[now]
+        if now < self.time_size - 1:
+            self.__upd_time(content, now+1)
     def reset(self):
         'reset time'
-        self.last_month = 0
-        self.last_day = 0
-        self.last_hour = 0
-        self.last_minute = 0
+        self.last_time = [0, 0, 0, 0,]
     def printamess(self, content):
         'print one message on the screen'
-        if len(content) == 6:
-            ptime = True
-            for i in range(4):
+        if len(content) == self.time_size + 2:
+            ptime = False
+            for i in range(self.time_size):
                 content[i] = int(content[i])
-            if content[0] > self.last_month:
-                self.__upd_month(content)
-            elif content[1] > self.last_day:
-                self.__upd_day(content)
-            elif content[2] > self.last_hour:
-                self.__upd_hour(content)
-            elif content[3] > self.last_minute + 1:
-                self.__upd_minute(content)
-            else:
-                ptime = False
+            for i in range(self.time_size):
+                if content[i] < self.last_time[i] \
+                        or content[i] > self.last_time[i] + self.allow[i]:
+                    self.__upd_time(content, i)
+                    ptime = True
+                    break
             if ptime:
                 print_time(content)
             color = colorama.Fore.BLUE
-            if content[4] == 'root':
+            if content[self.time_size] == 'root':
                 color = colorama.Fore.RED
-            print(color, content[4] + ':', colorama.Style.RESET_ALL, \
-                content[5])
+            print(color, content[self.time_size] + ':', \
+                    colorama.Style.RESET_ALL, \
+                    content[self.time_size + 1])
         else:
             print('Outdated message')
 

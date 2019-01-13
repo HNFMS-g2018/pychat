@@ -75,7 +75,6 @@ def main(): # {{{1
     room = _room.ChatRoom(user, \
             Chat.create_without_data('5c29b63afb4ffe005fb0de88'))
             # Chat.create_without_data('5c30264bfb4ffe005fd22a11'))
-    room.printall()
     while True:
         if camres == 'printall':
             room.printall()
@@ -85,7 +84,7 @@ def main(): # {{{1
             print(caminfo)
         con = input('Input yours(input :h to get help)$ ')
         _curse.cup(1)
-        print('                                                  ')
+        print('                                                                                ')
         _curse.cup(1)
         camres = 'null'
         if con == '':

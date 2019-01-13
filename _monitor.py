@@ -28,10 +28,11 @@ class Monitor(threading.Thread): # {{{1
             while not self.stoped and time.time() < endtime:
                 time.sleep(1)
 
-    def send(self): # {{{2
+    def send(self, times): # {{{2
         'to tell the monitor to do nothing'
-        self.todo.fetch()
-        self.last = self.todo.get('times')
+        # self.todo.fetch()
+        # self.last = self.todo.get('times')
+        self.last = times
 
     def tostop(self): # {{{2
         'to stop running'

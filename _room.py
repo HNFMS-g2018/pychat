@@ -13,6 +13,7 @@ class ChatRoom:
         self.mon.start()
         self.printer = _print.Printer()
         self.lastsend = time.time()
+        self.lastprint = 0
         self.__send('root', self.user.get('username') + ' join chat room!')
 
     def __del__(self):
@@ -34,7 +35,7 @@ class ChatRoom:
         self.todo.set('times', times)
         self.todo.set('contents', talk)
         self.todo.save()
-        self.mon.send()
+        self.mon.send(times)
 
     def printall(self):
         'print all messages of the chat room'
@@ -46,6 +47,22 @@ class ChatRoom:
         for rgs in range(ptr+1, size), range(ptr+1):
             for i in rgs:
                 self.printer.printamess(talk[i])
+
+    def printnew(self):
+        'print new messages of the chat room'
+        self.todo.fetch()
+        ptr = self.todo.get('point')
+        talk = self.todo.get('contents')
+        size = self.todo.get('size')
+        times = self.todo.get('times')
+        ptimes = times - self.lastprint
+        if ptimes > size:
+            ptimes = size
+        for i in range(ptr-ptimes+1, ptr+1):
+            if i < 0:
+                i += size
+            self.printer.printamess(talk[i])
+        self.lastprint = times
 
     def send(self, content):
         'send [content] to the chat room'

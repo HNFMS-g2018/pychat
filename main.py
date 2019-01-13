@@ -1,14 +1,13 @@
 #!/usr/bin/python3
 'Pychat!'
 import readline
-import time
 import os
 import colorama
 import leancloud as AV
 import yaml
 import _user
 import _args
-import _monitor
+import _curse
 import _room
 
 VERSION = 1.4
@@ -48,11 +47,14 @@ def cammond(comms): # {{{1
         res1, res2 = 'quit', 'You quited!'
     elif com in ('w', 'who'):
         pass
+    elif com in ('p', 'print'):
+        res1 = 'printall'
     elif com in ('h', 'help'):
         res2 = 'This is help message:\n \
                 use q[uit] to quit\n \
                 use h[elp] to get help\n \
-                use e[dit] to edit configuration file\n'
+                use p[rint] to print all messages\n \
+                use e[dit] to edit configuration file'
     elif com in ('e', 'edit'):
         os.system('edit ~/.config/pychat/init.yaml')
         res2 = 'editing'
@@ -69,24 +71,32 @@ def main(): # {{{1
     if _user.init(user, ARGS, config) == 1:
         print('failed')
         return 1
-    caminfo = ''
+    camres, caminfo = '', ''
     room = _room.ChatRoom(user, \
             Chat.create_without_data('5c29b63afb4ffe005fb0de88'))
             # Chat.create_without_data('5c30264bfb4ffe005fd22a11'))
+    room.printall()
     while True:
-        room.printall()
-        print(caminfo)
+        if camres == 'printall':
+            room.printall()
+        else:
+            room.printnew()
+        if caminfo != '':
+            print(caminfo)
         con = input('Input yours(input :h to get help)$ ')
-        comres = 'null'
+        _curse.cup(1)
+        print('                                                  ')
+        _curse.cup(1)
+        camres = 'null'
         if con == '':
             caminfo = 'input EMPTY!'
             continue
         elif con[0] == ':':
-            comres, caminfo = cammond(con[1:])
+            camres, caminfo = cammond(con[1:])
         else:
             room.send(con)
             caminfo = ''
-        if comres == 'quit':
+        if camres == 'quit':
             break
 
 def toexit(res): # {{{1

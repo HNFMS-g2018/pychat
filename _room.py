@@ -4,9 +4,9 @@ import colorama
 import _print
 import _monitor
 
-class ChatRoom:
+class ChatRoom: # {{{1
     'A chat room'
-    def __init__(self, user, todo):
+    def __init__(self, user, todo): # {{{2
         self.todo = todo
         self.user = user
         self.mon = _monitor.Monitor(todo)
@@ -14,13 +14,21 @@ class ChatRoom:
         self.printer = _print.Printer()
         self.lastsend = time.time()
         self.lastprint = 0
+        users = self.user_list()
+        users.append(self.user.get('username'))
+        self.todo.set('users', users)
+        self.todo.save()
         self.__send('root', self.user.get('username') + ' join chat room!')
 
-    def __del__(self):
-        self.__send('root', self.user.get('username') + ' quit chat room!')
+    def __del__(self): # {{{2
         self.mon.tostop()
+        users = self.user_list()
+        users.remove(self.user.get('username'))
+        self.todo.set('users', users)
+        self.todo.save()
+        self.__send('root', self.user.get('username') + ' quit chat room!')
 
-    def __send(self, username, content):
+    def __send(self, username, content): # {{{2
         self.todo.fetch()
         ptr = self.todo.get('point') + 1
         times = self.todo.get('times') + 1
@@ -37,7 +45,7 @@ class ChatRoom:
         self.todo.save()
         self.mon.send(times)
 
-    def printall(self):
+    def printall(self): # {{{2
         'print all messages of the chat room'
         self.todo.fetch()
         ptr = self.todo.get('point')
@@ -48,7 +56,7 @@ class ChatRoom:
             for i in rgs:
                 self.printer.printamess(talk[i])
 
-    def printnew(self):
+    def printnew(self): # {{{2
         'print new messages of the chat room'
         self.todo.fetch()
         ptr = self.todo.get('point')
@@ -64,7 +72,7 @@ class ChatRoom:
             self.printer.printamess(talk[i])
         self.lastprint = times
 
-    def send(self, content):
+    def send(self, content): # {{{2
         'send [content] to the chat room'
         if time.time() < self.lastsend + 1:
             print(colorama.Fore.RED, 'input too fast!!!\n', \
@@ -74,7 +82,12 @@ class ChatRoom:
             self.__send(self.user.get('username'), content)
         self.lastsend = time.time()
 
-def make_content(username, content):
+    def user_list(self): # {{{2
+        'return a list of users in the chat room'
+        self.todo.fetch()
+        return self.todo.get('users')
+
+def make_content(username, content): # {{{1
     'make [content] a message'
     return [int(time.strftime('%m')), int(time.strftime('%d')), \
             int(time.strftime('%H')), int(time.strftime('%M')), \

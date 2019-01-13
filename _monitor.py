@@ -24,7 +24,7 @@ class Monitor(threading.Thread): # {{{1
             elif times > self.last:
                 _messagebox.info(str(times-self.last) + ' new messages!')
                 self.last = times
-            endtime = time.time() + 60
+            endtime = time.time() + 90
             while not self.stoped and time.time() < endtime:
                 time.sleep(1)
 

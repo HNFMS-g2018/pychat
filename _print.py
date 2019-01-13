@@ -7,13 +7,16 @@ class Printer:
         self.last_time = [0, 0, 0, 0,]
         self.allow = [0, 0, 0, 2,]
         self.time_size = 4
+
     def __upd_time(self, content, now):
         self.last_time[now] = content[now]
         if now < self.time_size - 1:
             self.__upd_time(content, now+1)
+
     def reset(self):
         'reset time'
         self.last_time = [0, 0, 0, 0,]
+
     def printamess(self, content):
         'print one message on the screen'
         if len(content) == self.time_size + 2:

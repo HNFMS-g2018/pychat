@@ -15,8 +15,7 @@ all: $(pips) /usr/bin/pychat ~/.config/pychat/lock
 
 ~/.config/pychat/lock:
 	mkdir -p ~/.config/pychat
-	touch ~/.config/pychat/init.yaml
-	echo 'exist: true' > ~/.config/pychat/init.yaml
+	cp example.yaml ~/.config/pychat/init.yaml
 	touch ~/.config/pychat/lock
 
 pip/argparse.lock:

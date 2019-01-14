@@ -7,7 +7,6 @@ import leancloud as AV
 import yaml
 import _user
 import _args
-import _curse
 import _room
 
 VERSION = 1.5
@@ -100,9 +99,9 @@ def main(): # {{{1
             con = input('Input yours(input :h to get help)$ ')
         else:
             con = input(config.get('line'))
-        _curse.cup(1)
+        print(colorama.Cursor.UP(1), end='')
         print('                                                                                ')
-        _curse.cup(1)
+        print(colorama.Cursor.UP(1), end='')
         comres, cominfo = 'null', ''
         if con == '':
             if config.get('banempty'):

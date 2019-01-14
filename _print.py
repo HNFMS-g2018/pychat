@@ -35,7 +35,7 @@ class Printer:
             begin = ''
             if content[self.time_size] == 'root':
                 color = colorama.Fore.RED
-                begin = '\\G'
+                begin = '\\Y'
             print(color, content[self.time_size] + ':', \
                     colorama.Style.RESET_ALL, end=' ')
             print_text(begin + content[self.time_size + 1])

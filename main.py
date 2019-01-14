@@ -55,12 +55,16 @@ def cammond(comms): # {{{1
                 use h[elp] to get help\n \
                 use p[rint] to print all messages\n \
                 use w[ho] to see who\'re online\n \
-                use e[dit] to edit configuration file'
+                use g[et] to get new message (refresh)\n \
+                use e[dit] to edit configuration file\n \
+                All command should begin with \':\''
     elif com in ('e', 'edit'):
         os.system('edit ~/.config/pychat/init.yaml')
         res2 = 'editing'
     elif com in ('c', 'call'):
         pass
+    elif com in ('g', 'get'):
+        pass # Do nothing
     else:
         res2 = 'No such a cammond!'
     return res1, res2

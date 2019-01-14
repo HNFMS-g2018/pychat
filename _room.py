@@ -16,21 +16,30 @@ class ChatRoom: # {{{1
         self.lastsend = time.time()
         self.lastprint = 0
         users = self.user_list()
-        if users.count(self.user.get('username')):
+        username = self.user.get('username')
+        join_succes = True
+        if users.count(username):
+            join_succes = False
             _messagebox.warning('Warning: User has logined in')
-        else:
-            users.append(self.user.get('username'))
+        users.append(username)
         self.todo.set('users', users)
         self.todo.save()
-        self.__send('root', self.user.get('username') + ' join chat room!')
+        if join_succes:
+            self.__send('root', username + ' join chat room!')
 
     def __del__(self): # {{{2
         self.mon.tostop()
         users = self.user_list()
-        users.remove(self.user.get('username'))
+        username = self.user.get('username')
+        quit_succes = True
+        if users.count(username) > 1:
+            quit_succes = False
+            _messagebox.warning('Warning: There are other same user')
+        users.remove(username)
         self.todo.set('users', users)
         self.todo.save()
-        self.__send('root', self.user.get('username') + ' quit chat room!')
+        if quit_succes:
+            self.__send('root', self.user.get('username') + ' quit chat room!')
 
     def __send(self, username, content): # {{{2
         self.todo.fetch()

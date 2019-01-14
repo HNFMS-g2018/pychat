@@ -36,8 +36,8 @@ def welcome(): # {{{1
     print(colorama.Fore.RED, 'Notice:\n', info.get('content'))
     print(colorama.Style.RESET_ALL)
 
-def cammond(comms): # {{{1
-    'deal with a cammond'
+def command(comms): # {{{1
+    'deal with a command'
     res1, res2 = 'null', ''
     comms = comms.split(' ')
     if comms == []:
@@ -66,7 +66,7 @@ def cammond(comms): # {{{1
     elif com in ('g', 'get'):
         pass # Do nothing
     else:
-        res2 = 'No such a cammond!'
+        res2 = 'No such a command!'
     return res1, res2
 
 def main(): # {{{1
@@ -76,33 +76,33 @@ def main(): # {{{1
     if _user.init(user, ARGS, config) == 1:
         print('failed')
         return 1
-    camres, caminfo = '', ''
+    comres, cominfo = '', ''
     room = _room.ChatRoom(user, \
             Chat.create_without_data('5c29b63afb4ffe005fb0de88'))
             # Chat.create_without_data('5c30264bfb4ffe005fd22a11'))
     while True:
-        if camres == 'printall':
+        if comres == 'printall':
             room.printall()
         else:
             room.printnew()
-        if caminfo != '':
-            print(caminfo)
-        if camres == 'who':
+        if cominfo != '':
+            print(cominfo)
+        if comres == 'who':
             print(room.user_list())
         con = input('Input yours(input :h to get help)$ ')
         _curse.cup(1)
         print('                                                                                ')
         _curse.cup(1)
-        camres = 'null'
+        comres = 'null'
         if con == '':
-            caminfo = 'input EMPTY!'
+            cominfo = 'input EMPTY!'
             continue
         elif con[0] == ':':
-            camres, caminfo = cammond(con[1:])
+            comres, cominfo = command(con[1:])
         else:
             room.send(con)
-            caminfo = ''
-        if camres == 'quit':
+            cominfo = ''
+        if comres == 'quit':
             break
 
 def toexit(res): # {{{1

@@ -35,8 +35,8 @@ class Printer:
             if content[self.time_size] == 'root':
                 color = colorama.Fore.RED
             print(color, content[self.time_size] + ':', \
-                    colorama.Style.RESET_ALL, \
-                    content[self.time_size + 1])
+                    colorama.Style.RESET_ALL, end=' ')
+            print_text(content[self.time_size + 1])
         else:
             print('Outdated message')
 
@@ -44,3 +44,28 @@ def print_time(content):
     'print the time of a message'
     print(content[0], '.', content[1], '.' \
             , content[2], ':', content[3])
+
+def print_text(content):
+    'print [content] after processing'
+    deal = False
+    for i in content:
+        if deal:
+            if i == 'n':
+                print()
+            elif i == 'R':
+                print(colorama.Fore.RED, end='')
+            elif i == 'B':
+                print(colorama.Fore.BLUE, end='')
+            elif i == 'G':
+                print(colorama.Fore.GREEN, end='')
+            elif i == 'Y':
+                print(colorama.Fore.YELLOW, end='')
+            elif i == '0':
+                print(colorama.Style.RESET_ALL, end='')
+            deal = False
+        else:
+            if i == '\\':
+                deal = True
+            else:
+                print(i, end='')
+    print(colorama.Style.RESET_ALL)

@@ -54,6 +54,7 @@ def cammond(comms): # {{{1
                 use q[uit] to quit\n \
                 use h[elp] to get help\n \
                 use p[rint] to print all messages\n \
+                use w[ho] to see who\'re online\n \
                 use e[dit] to edit configuration file'
     elif com in ('e', 'edit'):
         os.system('edit ~/.config/pychat/init.yaml')

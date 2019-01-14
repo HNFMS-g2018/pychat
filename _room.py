@@ -3,6 +3,7 @@ import time
 import colorama
 import _print
 import _monitor
+import _messagebox
 
 class ChatRoom: # {{{1
     'A chat room'
@@ -15,7 +16,10 @@ class ChatRoom: # {{{1
         self.lastsend = time.time()
         self.lastprint = 0
         users = self.user_list()
-        users.append(self.user.get('username'))
+        if users.count(self.user.get('username')):
+            _messagebox.warning('Warning: User has logined in')
+        else:
+            users.append(self.user.get('username'))
         self.todo.set('users', users)
         self.todo.save()
         self.__send('root', self.user.get('username') + ' join chat room!')

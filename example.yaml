@@ -2,3 +2,5 @@
 exist: true # It must be true
 name: # (Your Username)
 pass: # (Your Password)
+
+banempty: true # (Set it to false if you want to call 'get' command by press enter)

@@ -95,7 +95,8 @@ def main(): # {{{1
         _curse.cup(1)
         comres = 'null'
         if con == '':
-            cominfo = 'input EMPTY!'
+            if config.get('banempty'):
+                cominfo = 'input EMPTY!'
             continue
         elif con[0] == ':':
             comres, cominfo = command(con[1:])

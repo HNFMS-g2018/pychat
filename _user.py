@@ -22,10 +22,13 @@ def login_register(user, types): # {{{1
             print('You\'re registering a new user')
             name = input('User name: ')
             passwd = getpass.getpass('Password: ')
-            user.set_username(name)
-            user.set_password(passwd)
+            passwd2 = getpass.getpass('Password again: ')
+            if passwd != passwd2:
+                raise UserError('There\' difference between the two password')
             if name.count(' '):
                 raise UserError('Space is not allow')
+            user.set_username(name)
+            user.set_password(passwd)
             user.sign_up()
         else:
             return 1

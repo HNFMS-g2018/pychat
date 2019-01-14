@@ -63,7 +63,9 @@ def command(comms): # {{{1
                 All command should begin with \':\''
     elif com in ('e', 'edit'):
         os.system('edit ~/.config/pychat/init.yaml')
-        prinfo = 'editing'
+        global config
+        config = yaml.load(open(CONFIGDIR + 'init.yaml'))
+        prinfo = 'edited'
     elif com in ('c', 'call'):
         pass
     elif com in ('g', 'get'):

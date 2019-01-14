@@ -58,8 +58,11 @@ class ChatRoom: # {{{1
         self.todo.save()
         self.mon.send(times)
 
-    def printall(self): # {{{2
-        'print all messages of the chat room'
+    def printall(self, printroot=True): # {{{2
+        '''
+        print all messages of the chat room
+        if [printroot] is true, donot print root h \'s messages
+        '''
         self.todo.fetch()
         ptr = self.todo.get('point')
         talk = self.todo.get('contents')
@@ -67,7 +70,8 @@ class ChatRoom: # {{{1
         self.printer.reset()
         for rgs in range(ptr+1, size), range(ptr+1):
             for i in rgs:
-                self.printer.printamess(talk[i])
+                if printroot or talk[i][4] != 'root':
+                    self.printer.printamess(talk[i])
 
     def printnew(self): # {{{2
         'print new messages of the chat room'

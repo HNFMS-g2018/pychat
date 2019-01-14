@@ -38,36 +38,39 @@ def welcome(): # {{{1
 
 def command(comms): # {{{1
     'deal with a command'
-    res1, res2 = 'null', ''
+    res, prinfo = 'null', ''
     comms = comms.split(' ')
     if comms == []:
-        return res1, res2
+        return res, prinfo
     com = comms[0]
     if com in ('quit', 'q'):
-        res1, res2 = 'quit', 'You quited!'
+        res, prinfo = 'quit', 'You quited!'
     elif com in ('w', 'who'):
-        res1 = 'who'
+        res, prinfo = 'who', 'The people who\' re in this room:'
     elif com in ('p', 'printall'):
-        res1 = 'printall'
+        res = 'printall'
+    elif com in ('k', 'killroot'):
+        res = 'killroot'
     elif com in ('h', 'help'):
-        res2 = 'This is help message:\n \
+        prinfo = 'This is help message:\n \
                 use q[uit] to quit\n \
                 use h[elp] to get help\n \
-                use p[rint] to print all messages\n \
                 use w[ho] to see who\'re online\n \
                 use g[et] to get new message (refresh)\n \
                 use e[dit] to edit configuration file\n \
+                use k[illroot] to print all messages without root\'s\n \
+                use p[rint] to print all messages\n \
                 All command should begin with \':\''
     elif com in ('e', 'edit'):
         os.system('edit ~/.config/pychat/init.yaml')
-        res2 = 'editing'
+        prinfo = 'editing'
     elif com in ('c', 'call'):
         pass
     elif com in ('g', 'get'):
         pass # Do nothing
     else:
-        res2 = 'No such a command!'
-    return res1, res2
+        prinfo = 'No such a command!'
+    return res, prinfo
 
 def main(): # {{{1
     'Main function'
@@ -80,9 +83,11 @@ def main(): # {{{1
     room = _room.ChatRoom(user, \
             Chat.create_without_data('5c29b63afb4ffe005fb0de88'))
             # Chat.create_without_data('5c30264bfb4ffe005fd22a11'))
-    while True:
+    while comres != 'quit':
         if comres == 'printall':
             room.printall()
+        elif comres == 'killroot':
+            room.printall(printroot=False)
         else:
             room.printnew()
         if cominfo != '':
@@ -93,18 +98,14 @@ def main(): # {{{1
         _curse.cup(1)
         print('                                                                                ')
         _curse.cup(1)
-        comres = 'null'
+        comres, cominfo = 'null', ''
         if con == '':
             if config.get('banempty'):
                 cominfo = 'input EMPTY!'
-            continue
         elif con[0] == ':':
             comres, cominfo = command(con[1:])
         else:
             room.send(con)
-            cominfo = ''
-        if comres == 'quit':
-            break
 
 def toexit(res): # {{{1
     'to exit the execute and return [res]'

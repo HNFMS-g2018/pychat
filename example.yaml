@@ -4,3 +4,4 @@ name: # (Your Username)
 pass: # (Your Password)
 
 banempty: true # (Set it to false if you want to call 'get' command by press enter)
+line: 'Input yours(input :h to get help)$ ' # Make your only input line

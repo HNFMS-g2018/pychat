@@ -94,7 +94,10 @@ def main(): # {{{1
             print(cominfo)
         if comres == 'who':
             print(room.user_list())
-        con = input('Input yours(input :h to get help)$ ')
+        if config.get('line') in ('', None):
+            con = input('Input yours(input :h to get help)$ ')
+        else:
+            con = input(config.get('line'))
         _curse.cup(1)
         print('                                                                                ')
         _curse.cup(1)

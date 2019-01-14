@@ -43,3 +43,6 @@ pip/yaml.lock:
 	pip3 install pyyaml
 	touch pip/yaml.lock
 
+clean:
+	rm pychat
+	rm update-pychat

@@ -38,6 +38,7 @@ class ChatRoom: # {{{1
         users.remove(username)
         self.todo.set('users', users)
         self.todo.save()
+        self.user.save()
         if quit_succes:
             self.__send('root', self.user.get('username') + ' quit chat room!')
 
@@ -98,6 +99,7 @@ class ChatRoom: # {{{1
             time.sleep(1)
         else:
             self.__send(self.user.get('username'), content)
+            self.user.set('active', self.user.get('active') + 1)
         self.lastsend = time.time()
 
     def user_list(self): # {{{2

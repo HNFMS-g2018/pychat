@@ -68,6 +68,7 @@ class ChatRoom: # {{{1
         talk = self.todo.get('contents')
         size = self.todo.get('size')
         self.printer.reset()
+        print('————————————————————')
         for rgs in range(ptr+1, size), range(ptr+1):
             for i in rgs:
                 if printroot or talk[i][4] != 'root':

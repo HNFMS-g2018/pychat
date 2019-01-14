@@ -62,6 +62,10 @@ def print_text(content):
                 print(colorama.Fore.GREEN, end='')
             elif i == 'Y':
                 print(colorama.Fore.YELLOW, end='')
+            elif i == 'P':
+                print(colorama.Fore.MAGENTA, end='')
+            elif i == 'O':
+                print(colorama.Fore.LIGHTMAGENTA_EX, end='')
             elif i == '0':
                 print(colorama.Style.RESET_ALL, end='')
             deal = False

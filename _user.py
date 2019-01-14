@@ -4,6 +4,11 @@ import getpass
 import colorama
 import leancloud as AV
 
+class UserError(Exception):
+    'a error to raise'
+    def __init__(self, value):
+        Exception.__init__(self, value)
+
 def login_register(user, types): # {{{1
     'get a user'
     try:
@@ -19,10 +24,13 @@ def login_register(user, types): # {{{1
             passwd = getpass.getpass('Password: ')
             user.set_username(name)
             user.set_password(passwd)
+            if name.count(' '):
+                raise UserError('Space is not allow')
             user.sign_up()
         else:
             return 1
-    except AV.errors.LeanCloudError as err:
+    except (AV.errors.LeanCloudError, UserError) as err:
+        print()
         print('error!')
         print(colorama.Fore.RED, err, colorama.Style.RESET_ALL)
         exit(2)

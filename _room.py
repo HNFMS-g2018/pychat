@@ -48,6 +48,9 @@ class ChatRoom: # {{{1
         times = self.todo.get('times') + 1
         talk = self.todo.get('contents')
         size = self.todo.get('size')
+        for i in talk:
+            if len(i[5]) > 100:
+                i[5] = 'I AK IOI'
         while len(talk) < size:
             talk.append([])
         if ptr == size:

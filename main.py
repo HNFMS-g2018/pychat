@@ -112,6 +112,8 @@ def main(): # {{{1
                 cominfo = 'input EMPTY!'
         elif con[0] == ':':
             comres, cominfo = command(con[1:])
+        elif con[0] == '!':
+            os.system(con[1:])
         else:
             room.send(con)
 

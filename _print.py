@@ -31,10 +31,10 @@ class Printer:
                     break
             if ptime:
                 print_time(content)
-            color = colorama.Fore.BLUE
+            color = colorama.Fore.CYAN
             begin = ''
             if content[self.time_size] == 'root':
-                color = colorama.Fore.RED
+                color = colorama.Fore.LIGHTYELLOW_EX
                 begin = '\\Y'
             print(color, content[self.time_size] + ':', \
                     colorama.Style.RESET_ALL, end=' ')
@@ -65,8 +65,6 @@ def print_text(content):
                 print(colorama.Fore.YELLOW, end='')
             elif i == 'P':
                 print(colorama.Fore.MAGENTA, end='')
-            elif i == 'O':
-                print(colorama.Fore.LIGHTMAGENTA_EX, end='')
             elif i == '0':
                 print(colorama.Style.RESET_ALL, end='')
             elif i == '\\':

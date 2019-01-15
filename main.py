@@ -102,6 +102,10 @@ def main(): # {{{1
         print(colorama.Cursor.UP(1), end='')
         print('                                                                                ')
         print(colorama.Cursor.UP(1), end='')
+        if not room.exist():
+            print()
+            print('Sorry, you must leave now')
+            break
         comres, cominfo = 'null', ''
         if con == '':
             if config.get('banempty'):
@@ -110,10 +114,6 @@ def main(): # {{{1
             comres, cominfo = command(con[1:])
         else:
             room.send(con)
-        if not room.exist():
-            print()
-            print('Sorry, you must leave now')
-            break
 
 def toexit(res): # {{{1
     'to exit the execute and return [res]'

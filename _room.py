@@ -68,12 +68,13 @@ class ChatRoom: # {{{1
         self.todo.save()
         self.mon.send(times)
 
-    def printall(self, printroot=True): # {{{2
+    def printall(self, printroot=True, fetch=True): # {{{2
         '''
         print all messages of the chat room
         if [printroot] is true, donot print root h \'s messages
         '''
-        self.todo.fetch()
+        if fetch:
+            self.todo.fetch()
         ptr = self.todo.get('point')
         talk = self.todo.get('contents')
         size = self.todo.get('size')
@@ -84,9 +85,10 @@ class ChatRoom: # {{{1
                 if printroot or talk[i][4] != 'root':
                     self.printer.printamess(talk[i])
 
-    def printnew(self): # {{{2
+    def printnew(self, fetch=True): # {{{2
         'print new messages of the chat room'
-        self.todo.fetch()
+        if fetch:
+            self.todo.fetch()
         ptr = self.todo.get('point')
         talk = self.todo.get('contents')
         size = self.todo.get('size')
@@ -115,14 +117,14 @@ class ChatRoom: # {{{1
             self.user.set('active', self.user.get('active') + 1)
         self.lastsend = time.time()
 
-    def user_list(self): # {{{2
+    def user_list(self, fetch=True): # {{{2
         'return a list of users in the chat room'
-        self.todo.fetch()
+        if fetch:
+            self.todo.fetch()
         return self.todo.get('users')
 
     def exist(self): # {{{2
         'return if the user is still in the chat room'
-        self.todo.fetch()
         users = self.user_list()
         return bool(users.count(self.user.get('username')))
 

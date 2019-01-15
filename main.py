@@ -5,6 +5,7 @@ import os
 import colorama
 import leancloud as AV
 import yaml
+import time
 import _user
 import _args
 import _room
@@ -91,13 +92,15 @@ def main(): # {{{1
     else:
         room = _room.ChatRoom(user, \
                 Chat.create_without_data('5c29b63afb4ffe005fb0de88'))
+    fetch = True
     while comres != 'quit':
+        lasttime = time.time()
         if comres == 'printall':
-            room.printall()
+            room.printall(fetch=fetch)
         elif comres == 'killroot':
-            room.printall(printroot=False)
+            room.printall(printroot=False, fetch=fetch)
         else:
-            room.printnew()
+            room.printnew(fetch=fetch)
         if cominfo != '':
             print(cominfo)
         if comres == 'who':
@@ -109,7 +112,7 @@ def main(): # {{{1
         print(colorama.Cursor.UP(1), end='')
         print('                                                                                ')
         print(colorama.Cursor.UP(1), end='')
-        if not room.exist():
+        if not room.exist(): # room.todo fetch there
             print()
             print('Sorry, you must leave now')
             break
@@ -117,11 +120,14 @@ def main(): # {{{1
         if con == '':
             if config.get('banempty'):
                 cominfo = 'input EMPTY!'
+            fetch = False
         elif con[0] == ':':
             comres, cominfo = command(con[1:])
+            fetch = False
         elif con[0] == '!':
             os.system(con[1:])
             print()
+            fetch = False
         elif con[0] == '@':
             try:
                 import _root
@@ -129,8 +135,13 @@ def main(): # {{{1
             except ModuleNotFoundError:
                 import _messagebox
                 _messagebox.warning('You cannot use root command!')
+            fetch = True
         else:
             room.send(con)
+            fetch = False
+        if time.time() < lasttime + 1.5:
+            print('Wait a moment, you type so fast!')
+            time.sleep(lasttime + 1.5 - time.time())
 
 def toexit(res): # {{{1
     'to exit the execute and return [res]'

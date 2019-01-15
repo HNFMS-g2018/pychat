@@ -40,7 +40,8 @@ class ChatRoom: # {{{1
         if users.count(username) > 1:
             quit_succes = False
             _messagebox.warning('Warning: There are other same user')
-        users.remove(username)
+        if username in users:
+            users.remove(username)
         self.todo.set('users', users)
         self.todo.save()
         self.user.save()
@@ -57,7 +58,7 @@ class ChatRoom: # {{{1
             if len(i[5]) > 50:
                 i[5] = '我他妈发了一个超长的句子，怕辣你们眼睛'
         while len(talk) < size:
-            talk.append([])
+            talk.append([0, 0, 0, 0, 'root', 'null'])
         if ptr == size:
             ptr = 0
         talk[ptr] = make_content(username, content)

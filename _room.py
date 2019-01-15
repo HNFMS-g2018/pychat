@@ -53,9 +53,9 @@ class ChatRoom: # {{{1
         times = self.todo.get('times') + 1
         talk = self.todo.get('contents')
         size = self.todo.get('size')
-        # for i in talk:
-        #     if len(i[5]) > 100:
-        #         i[5] = 'I AK IOI'
+        for i in talk:
+            if len(i[5]) > 50:
+                i[5] = '我他妈发了一个超长的句子，怕辣你们眼睛'
         while len(talk) < size:
             talk.append([])
         if ptr == size:

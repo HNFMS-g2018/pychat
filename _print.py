@@ -54,6 +54,7 @@ def print_text(content):
         if deal:
             if i == 'n':
                 print()
+                print('> ', end='')
             elif i == 'R':
                 print(colorama.Fore.RED, end='')
             elif i == 'B':

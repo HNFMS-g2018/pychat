@@ -36,9 +36,11 @@ class Printer:
             if content[self.time_size] == 'root':
                 color = colorama.Fore.LIGHTYELLOW_EX
                 begin = '\\Y'
-            print(color, content[self.time_size] + ':', \
-                    colorama.Style.RESET_ALL, end=' ')
+            print('', content[self.time_size] + ': ', end='')
             print_text(begin + content[self.time_size + 1])
+            print(colorama.Cursor.UP(1), end='')
+            print(color, content[self.time_size] + ':', \
+                    colorama.Style.RESET_ALL)
         else:
             print('Outdated message')
 

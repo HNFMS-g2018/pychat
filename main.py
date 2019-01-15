@@ -15,8 +15,10 @@ ARGS = _args.init()
 Chat = AV.Object.extend('talk')
 Notice = AV.Object.extend('notice')
 config = yaml.load(open(CONFIGDIR + 'init.yaml'))
-# AV.init("IDDU0rkX0FJ9hi2SFQgP1YIt-gzGzoHsz", "K3zSqgPWAssTN9kyKWDJWG8y")
-AV.init('ULc6VQsRiQr4NENpfoJpfd52-gzGzoHsz', 'iYA2I9QBd6SJ1fwGOQxceyQD')
+if ARGS.debug:
+    AV.init('ULc6VQsRiQr4NENpfoJpfd52-gzGzoHsz', 'iYA2I9QBd6SJ1fwGOQxceyQD')
+else:
+    AV.init("IDDU0rkX0FJ9hi2SFQgP1YIt-gzGzoHsz", "K3zSqgPWAssTN9kyKWDJWG8y")
 colorama.init()
 
 def welcome(): # {{{1
@@ -29,8 +31,10 @@ def welcome(): # {{{1
     print('│                         │')
     print('│     VERSION:  ', VERSION, '     │')
     print('└─────────────────────────┘')
-    # info = Notice.create_without_data('5c29d4ab9f5454007005488b')
-    info = Notice.create_without_data('5c3025e667f35600631c87d0')
+    if ARGS.debug:
+        info = Notice.create_without_data('5c3025e667f35600631c87d0')
+    else:
+        info = Notice.create_without_data('5c29d4ab9f5454007005488b')
     info.fetch()
     print(colorama.Fore.RED, 'Notice:\n', info.get('content'))
     print(colorama.Style.RESET_ALL)
@@ -81,9 +85,12 @@ def main(): # {{{1
         print('failed')
         return 1
     comres, cominfo = '', ''
-    room = _room.ChatRoom(user, \
-            Chat.create_without_data('5c30264bfb4ffe005fd22a11'))
-            # Chat.create_without_data('5c29b63afb4ffe005fb0de88'))
+    if ARGS.debug:
+        room = _room.ChatRoom(user, \
+                Chat.create_without_data('5c30264bfb4ffe005fd22a11'))
+    else:
+        room = _room.ChatRoom(user, \
+                Chat.create_without_data('5c29b63afb4ffe005fb0de88'))
     while comres != 'quit':
         if comres == 'printall':
             room.printall()
@@ -118,7 +125,7 @@ def main(): # {{{1
         elif con[0] == '@':
             try:
                 import _root
-                _root.command(con[1:])
+                _root.command(con[1:], ARGS.debug)
             except ModuleNotFoundError:
                 import _messagebox
                 _messagebox.warning('You cannot use root command!')

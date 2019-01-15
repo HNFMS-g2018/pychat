@@ -68,6 +68,8 @@ def print_text(content):
                 print(colorama.Fore.LIGHTMAGENTA_EX, end='')
             elif i == '0':
                 print(colorama.Style.RESET_ALL, end='')
+            elif i == '\\':
+                print('\\', end='')
             deal = False
         else:
             if i == '\\':

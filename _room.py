@@ -1,4 +1,5 @@
 'A chat room'
+import readline
 import time
 import colorama
 import _print
@@ -21,6 +22,10 @@ class ChatRoom: # {{{1
         if users.count(username):
             join_succes = False
             _messagebox.warning('Warning: User has logined in')
+            chos = input('!If you are the only user named that, type ok')
+            if chos == 'ok':
+                while users.count(username):
+                    users.remove(username)
         users.append(username)
         self.todo.set('users', users)
         self.todo.save()

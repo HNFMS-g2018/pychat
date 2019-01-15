@@ -53,9 +53,9 @@ class ChatRoom: # {{{1
         times = self.todo.get('times') + 1
         talk = self.todo.get('contents')
         size = self.todo.get('size')
-        for i in talk:
-            if len(i[5]) > 100:
-                i[5] = 'I AK IOI'
+        # for i in talk:
+        #     if len(i[5]) > 100:
+        #         i[5] = 'I AK IOI'
         while len(talk) < size:
             talk.append([])
         if ptr == size:
@@ -103,6 +103,10 @@ class ChatRoom: # {{{1
         'send [content] to the chat room'
         if time.time() < self.lastsend + 1:
             print(colorama.Fore.RED, 'input too fast!!!\n', \
+                    'please wait at lease one second!', colorama.Style.RESET_ALL)
+            time.sleep(1)
+        elif len(content) > 50:
+            print(colorama.Fore.RED, 'message too long!!!\n', \
                     'please wait at lease one second!', colorama.Style.RESET_ALL)
             time.sleep(1)
         else:

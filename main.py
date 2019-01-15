@@ -110,6 +110,10 @@ def main(): # {{{1
             comres, cominfo = command(con[1:])
         else:
             room.send(con)
+        if not room.exist():
+            print()
+            print('Sorry, you must leave now')
+            break
 
 def toexit(res): # {{{1
     'to exit the execute and return [res]'

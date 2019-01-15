@@ -115,6 +115,12 @@ class ChatRoom: # {{{1
         self.todo.fetch()
         return self.todo.get('users')
 
+    def exist(self): # {{{2
+        'return if the user is still in the chat room'
+        self.todo.fetch()
+        users = self.user_list()
+        return bool(users.count(self.user.get('username')))
+
 def make_content(username, content): # {{{1
     'make [content] a message'
     return [int(time.strftime('%m')), int(time.strftime('%d')), \

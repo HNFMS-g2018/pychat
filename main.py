@@ -114,6 +114,7 @@ def main(): # {{{1
             comres, cominfo = command(con[1:])
         elif con[0] == '!':
             os.system(con[1:])
+            print()
         else:
             room.send(con)
 

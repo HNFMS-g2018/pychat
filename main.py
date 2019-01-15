@@ -93,9 +93,10 @@ def main(): # {{{1
         room = _room.ChatRoom(user, \
                 Chat.create_without_data('5c29b63afb4ffe005fb0de88'))
     fetch = True
+    root_com = None
     try:
         import _root
-        _root.init(ARGS.debug)
+        root_com = _root.Command(AV, ARGS.debug)
     except ModuleNotFoundError:
         pass
     while comres != 'quit':
@@ -134,9 +135,9 @@ def main(): # {{{1
             print()
             fetch = False
         elif con[0] == '@':
-            try:
-                _root.command(con[1:])
-            except ModuleNotFoundError:
+            if root_com:
+                root_com.command(con[1:])
+            else:
                 import _messagebox
                 _messagebox.warning('You cannot use root command!')
             fetch = True

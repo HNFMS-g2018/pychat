@@ -8,10 +8,10 @@ import _messagebox
 
 class ChatRoom: # {{{1
     'A chat room'
-    def __init__(self, user, todo): # {{{2
+    def __init__(self, user, todo, mon=True): # {{{2
         self.todo = todo
         self.user = user
-        self.mon = _monitor.Monitor(todo)
+        self.mon = _monitor.Monitor(todo, real=mon)
         self.mon.start()
         self.printer = _print.Printer()
         self.lastsend = time.time()
@@ -34,8 +34,8 @@ class ChatRoom: # {{{1
 
     def __del__(self): # {{{2
         self.mon.tostop()
-        users = self.user_list()
         username = self.user.get('username')
+        users = self.user_list()
         quit_succes = True
         if users.count(username) > 1:
             quit_succes = False

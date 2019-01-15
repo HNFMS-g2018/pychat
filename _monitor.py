@@ -5,13 +5,11 @@ import _messagebox
 
 class Monitor(threading.Thread): # {{{1
     'a Monitor'
-    # last = 0
-    # todo = None
-    def __init__(self, todo): # {{{2
+    def __init__(self, todo, real=True): # {{{2
         threading.Thread.__init__(self)
         self.todo = todo
         self.last = 0
-        self.stoped = False
+        self.stoped = not real
 
     def run(self): # {{{2
         'listening for new messages'

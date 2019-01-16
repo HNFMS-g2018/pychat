@@ -39,6 +39,12 @@ def login_register(user, types): # {{{1
         exit(2)
     return 0
 
+def email(user): # {{{1
+    'set email for [user]'
+    mail = input('Your email: ')
+    user.set_email(mail)
+    user.save()
+
 def init(user, args, config): # {{{1
     'first join in'
     if args.login:

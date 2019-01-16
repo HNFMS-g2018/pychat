@@ -55,6 +55,8 @@ def command(comms): # {{{1
         global config
         config = yaml.load(open(CONFIGDIR + 'init.yaml'))
         prinfo = 'edited'
+    elif com in ('em', 'email'):
+        res = 'em'
     elif com in ('g', 'get'):
         pass # Do nothing
     elif com in ('h', 'help'):
@@ -132,6 +134,8 @@ def main(): # {{{1
             newpass = getpass.getpass('new password: ')
             user.set_password(newpass)
             user.save()
+        elif comres == 'em':
+            _user.email(user)
         else:
             room.printnew(fetch=fetch)
         if cominfo != '':

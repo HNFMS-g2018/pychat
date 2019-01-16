@@ -78,3 +78,22 @@ def print_text(content):
             else:
                 print(i, end='')
     print(colorama.Style.RESET_ALL)
+
+BAN_LIST = ['ak', 'ioi', 'irc', 'fuck']
+
+def deal(content):
+    'deal with string [content] and return it'
+    if len(content) > 50:
+        content = '\\R我他妈发了一个超长的句子，怕辣你们眼睛'
+    elif '' in content:
+        content = '\\R我他妈发了一个有终端控制符的句子，怕辣你们眼睛'
+    else:
+        for ban in BAN_LIST:
+            while content.find(ban) != -1:
+                pos = content.find(ban)
+                if pos == 0:
+                    string = '\\R***\\0' + content[len(ban):]
+                else:
+                    string = content[:pos-1] + '\\R***\\0' + content[pos+len(ban):]
+                content = string
+    return content

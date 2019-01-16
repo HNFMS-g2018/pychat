@@ -55,10 +55,7 @@ class ChatRoom: # {{{1
         talk = self.todo.get('contents')
         size = self.todo.get('size')
         for i in talk:
-            if len(i[5]) > 50:
-                i[5] = '\\R我他妈发了一个超长的句子，怕辣你们眼睛'
-            elif '' in i[5]:
-                i[5] = '\\R我他妈发了一个有终端控制符的句子，怕辣你们眼睛'
+            i[5] = _print.deal(i[5])
         while len(talk) < size:
             talk.append([0, 0, 0, 0, 'root', 'null'])
         if ptr == size:

@@ -127,6 +127,7 @@ def main(): # {{{1
             root_com = _root.Command(AV, ARGS.debug)
     except ModuleNotFoundError:
         pass
+    nickname = ''
     while comres != 'quit':
         lasttime = time.time()
         if comres == 'printall':

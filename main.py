@@ -67,7 +67,7 @@ def command(comms): # {{{1
                 use g[et] to get new message (refresh)
                 use h[elp] to get help
                 use k[illroot] to print all messages without root's
-                use n[ick] to act as another user
+                use n[ick] to act as another user or be back to yourself
                 use p[rint] to print all messages
                 use pass[word] to change your password
                 use q[uit] to quit
@@ -141,7 +141,7 @@ def main(): # {{{1
         elif comres == 'em':
             _user.email(user)
         elif comres == 'nick':
-            nickname = input('nick name')
+            nickname = input('nick name(empty to be back): ')
         else:
             room.printnew(fetch=fetch)
         if cominfo != '':

@@ -48,35 +48,54 @@ def command(comms): # {{{1
     if comms == []:
         return res, prinfo
     com = comms[0]
-    if com in ('quit', 'q'):
-        res, prinfo = 'quit', 'You quited!'
-    elif com in ('w', 'who'):
-        res, prinfo = 'who', 'The people who\' re in this room:'
-    elif com in ('p', 'printall'):
-        res = 'printall'
-    elif com in ('k', 'killroot'):
-        res = 'killroot'
-    elif com in ('h', 'help'):
-        prinfo = 'This is help message:\n \
-                use q[uit] to quit\n \
-                use h[elp] to get help\n \
-                use w[ho] to see who\'re online\n \
-                use g[et] to get new message (refresh)\n \
-                use e[dit] to edit configuration file\n \
-                use k[illroot] to print all messages without root\'s\n \
-                use p[rint] to print all messages\n \
-                All command should begin with \':\''
+    if com in ('c', 'call'):
+        pass
     elif com in ('e', 'edit'):
         os.system('edit ~/.config/pychat/init.yaml')
         global config
         config = yaml.load(open(CONFIGDIR + 'init.yaml'))
         prinfo = 'edited'
-    elif com in ('c', 'call'):
-        pass
-    elif com in ('pass', 'password'):
-        res = 'pass'
     elif com in ('g', 'get'):
         pass # Do nothing
+    elif com in ('h', 'help'):
+        prinfo = '''
+        'This is help message:
+            All command should begin with ':'
+                use e[dit] to edit configuration file
+                use g[et] to get new message (refresh)
+                use h[elp] to get help
+                use k[illroot] to print all messages without root's
+                use p[rint] to print all messages
+                use pass[word] to change your password
+                use q[uit] to quit
+                use w[ho] to see who're online
+
+            Also you can use ! + [command] to calll external command
+                for example: !ls
+
+            You can send special word by this:
+                red code: \\R[content]\\0
+                blue code \\B[content]\\0
+                green code: \\G[content]\\0
+                yellow code: \\Y[content]\\0
+                purple code: \\P[content]\\0
+                new line: \\n
+
+            You can even use Root Command which begins with '@' if loginging in with root
+                No example and help because only kewth can use it
+
+        Have fun!
+        '''
+    elif com in ('k', 'killroot'):
+        res = 'killroot'
+    elif com in ('p', 'printall'):
+        res = 'printall'
+    elif com in ('pass', 'password'):
+        res = 'pass'
+    elif com in ('q', 'quit'):
+        res, prinfo = 'quit', 'You quited!'
+    elif com in ('w', 'who'):
+        res, prinfo = 'who', 'The people who\' re in this room:'
     else:
         prinfo = 'No such a command!'
     return res, prinfo

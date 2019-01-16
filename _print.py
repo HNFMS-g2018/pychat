@@ -80,7 +80,8 @@ def print_text(content):
                 print(i, end='')
     print(colorama.Style.RESET_ALL)
 
-BAN_LIST = ['ak', 'ioi', 'irc', 'fuck', 'AK', 'IOI', 'Fuck', '呵呵', '垃圾', 'FUCK']
+BAN_LIST = ['ak', 'ioi', 'irc', 'fuck', 'AK', 'IOI', 'Fuck', '呵呵', '垃圾', 'FUCK', \
+        '好屎', 'shi', 'kewth', 'Kewth']
 
 def dealstr(content):
     'deal with string [content] and return it'

@@ -55,7 +55,7 @@ class ChatRoom: # {{{1
         talk = self.todo.get('contents')
         size = self.todo.get('size')
         for i in talk:
-            i[5] = _print.deal(i[5])
+            i[5] = _print.dealstr(i[5])
         while len(talk) < size:
             talk.append([0, 0, 0, 0, 'root', 'null'])
         if ptr == size:

@@ -51,6 +51,7 @@ def print_time(content):
 
 def print_text(content):
     'print [content] after processing'
+    content = dealstr(content)
     deal = False
     for i in content:
         if deal:
@@ -81,7 +82,7 @@ def print_text(content):
 
 BAN_LIST = ['ak', 'ioi', 'irc', 'fuck']
 
-def deal(content):
+def dealstr(content):
     'deal with string [content] and return it'
     if len(content) > 50:
         content = '\\R我他妈发了一个超长的句子，怕辣你们眼睛'

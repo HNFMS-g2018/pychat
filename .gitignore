@@ -2,3 +2,4 @@ build_lean
 pip
 __pycache__
 _root.py
+*.pyc

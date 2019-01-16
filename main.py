@@ -2,10 +2,11 @@
 'Pychat!'
 import readline
 import os
+import time
+import getpass
 import colorama
 import leancloud as AV
 import yaml
-import time
 import _user
 import _args
 import _room
@@ -72,6 +73,8 @@ def command(comms): # {{{1
         prinfo = 'edited'
     elif com in ('c', 'call'):
         pass
+    elif com in ('pass', 'password'):
+        res = 'pass'
     elif com in ('g', 'get'):
         pass # Do nothing
     else:
@@ -95,8 +98,9 @@ def main(): # {{{1
     fetch = True
     root_com = None
     try:
-        import _root
-        root_com = _root.Command(AV, ARGS.debug)
+        if not ARGS.noroot:
+            import _root
+            root_com = _root.Command(AV, ARGS.debug)
     except ModuleNotFoundError:
         pass
     while comres != 'quit':
@@ -105,6 +109,10 @@ def main(): # {{{1
             room.printall(fetch=fetch)
         elif comres == 'killroot':
             room.printall(printroot=False, fetch=fetch)
+        elif comres == 'pass':
+            newpass = getpass.getpass('new password: ')
+            user.set_password(newpass)
+            user.save()
         else:
             room.printnew(fetch=fetch)
         if cominfo != '':
@@ -135,7 +143,7 @@ def main(): # {{{1
             print()
             fetch = False
         elif con[0] == '@':
-            if root_com:
+            if root_com and not ARGS.noroot:
                 root_com.command(con[1:])
             else:
                 import _messagebox

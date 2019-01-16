@@ -47,7 +47,7 @@ class Printer:
 def print_time(content):
     'print the time of a message'
     print(content[0], '月', content[1], '日' \
-            , content[2], '时', content[3], '秒')
+            , content[2], '时', content[3], '分')
 
 def print_text(content):
     'print [content] after processing'

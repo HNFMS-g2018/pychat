@@ -67,6 +67,7 @@ def command(comms): # {{{1
                 use g[et] to get new message (refresh)
                 use h[elp] to get help
                 use k[illroot] to print all messages without root's
+                use n[ick] to act as another user
                 use p[rint] to print all messages
                 use pass[word] to change your password
                 use q[uit] to quit
@@ -90,6 +91,8 @@ def command(comms): # {{{1
         '''
     elif com in ('k', 'killroot'):
         res = 'killroot'
+    elif com in ('n', 'nick'):
+        res = 'nick'
     elif com in ('p', 'printall'):
         res = 'printall'
     elif com in ('pass', 'password'):
@@ -136,6 +139,8 @@ def main(): # {{{1
             user.save()
         elif comres == 'em':
             _user.email(user)
+        elif comres == 'nick':
+            nickname = input('nick name')
         else:
             room.printnew(fetch=fetch)
         if cominfo != '':
@@ -173,7 +178,7 @@ def main(): # {{{1
                 _messagebox.warning('You cannot use root command!')
             fetch = True
         else:
-            room.send(con)
+            room.send(con, nickname=nickname)
             fetch = False
         if time.time() < lasttime + 1.5:
             print('Wait a moment, you type so fast!')

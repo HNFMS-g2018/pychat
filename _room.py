@@ -104,7 +104,7 @@ class ChatRoom: # {{{1
             self.printer.printamess(talk[i])
         self.lastprint = times
 
-    def send(self, content): # {{{2
+    def send(self, content, nickname=''): # {{{2
         'send [content] to the chat room'
         if time.time() < self.lastsend + 1:
             print(colorama.Fore.RED, 'input too fast!!!\n', \
@@ -115,7 +115,10 @@ class ChatRoom: # {{{1
                     'please wait at lease one second!', colorama.Style.RESET_ALL)
             time.sleep(1)
         else:
-            self.__send(self.user.get('username'), content)
+            if nickname == '':
+                self.__send(self.user.get('username'), content)
+            else:
+                self.__send(nickname + '  <NICK>', content)
             # self.user.set('active', self.user.get('active') + 1)
         self.lastsend = time.time()
 

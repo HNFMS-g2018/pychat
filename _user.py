@@ -46,7 +46,8 @@ class User: # {{{1
         'return level'
         while self.get_active() >= self.__need_active:
             self.__now_active -= self.__need_active
-            self.__need_active += 3
+            if self.__need_active < 50:
+                self.__need_active += 1
             self.__level += 1
         return self.__level
 

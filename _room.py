@@ -17,7 +17,7 @@ class ChatRoom: # {{{1
         self.lastsend = time.time()
         self.lastprint = 0
         users = self.user_list()
-        username = self.user.get('username')
+        username = self.user.get_username()
         join_succes = True
         if users.count(username):
             join_succes = False
@@ -34,7 +34,7 @@ class ChatRoom: # {{{1
 
     def __del__(self): # {{{2
         self.mon.tostop()
-        username = self.user.get('username')
+        username = self.user.get_username()
         users = self.user_list()
         quit_succes = True
         if users.count(username) > 1:
@@ -44,9 +44,11 @@ class ChatRoom: # {{{1
             users.remove(username)
         self.todo.set('users', users)
         self.todo.save()
-        # self.user.save()
+        _messagebox.info(self.user.get_username())
+        # self.user.try_save()
+        _messagebox.info(self.user.get_username())
         if quit_succes:
-            self.__send('root', self.user.get('username') + ' quit chat room!')
+            self.__send('root', self.user.get_username() + ' quit chat room!')
 
     def __send(self, username, content): # {{{2
         self.todo.fetch()
@@ -113,10 +115,10 @@ class ChatRoom: # {{{1
             time.sleep(1)
         else:
             if nickname == '':
-                self.__send(self.user.get('username'), content)
+                self.__send(self.user.get_username(), content)
             else:
                 self.__send(nickname + '  <NICK>', content)
-            # self.user.set('active', self.user.get('active') + 1)
+            self.user.add_active(1)
         self.lastsend = time.time()
 
     def user_list(self, fetch=True): # {{{2
@@ -128,7 +130,7 @@ class ChatRoom: # {{{1
     def exist(self): # {{{2
         'return if the user is still in the chat room'
         users = self.user_list()
-        return bool(users.count(self.user.get('username')))
+        return bool(users.count(self.user.get_username()))
 
 def make_content(username, content): # {{{1
     'make [content] a message'

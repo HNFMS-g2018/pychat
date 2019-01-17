@@ -9,6 +9,38 @@ class UserError(Exception):
     def __init__(self, value):
         Exception.__init__(self, value)
 
+class USer(AV.User):
+    'user of leancloud'
+    def __init__(self, onlyusername=None):
+        AV.User.__init__(self)
+        self.__level = 0
+        self.__need_active = 1
+        if onlyusername:
+            self.set_username(onlyusername)
+            self.onlyusername = True
+        else:
+            self.onlyusername = False
+
+    def get_active(self):
+        'return active'
+        return self.get('active')
+
+    def add_active(self, times):
+        'active += [times]'
+        self.set('active', self.get_active() + times)
+
+    def get_level(self):
+        'return level'
+        while self.get_active() > self.__need_active:
+            self.__need_active *= 2
+            self.__level += 1
+        return self.__level
+
+    def try_save(self):
+        'try to save'
+        if not self.onlyusername:
+            self.save()
+
 def login_register(user, types): # {{{1
     'get a user'
     try:

@@ -28,7 +28,7 @@ class User: # {{{1
 
     def get_active_tot(self):
         'return total active'
-        res = self.avuser.get('active')
+        res = self.avuser.get('active_tot')
         if not res:
             res = 0
         return res
@@ -39,15 +39,15 @@ class User: # {{{1
 
     def add_active(self, times):
         'active += [times]'
-        self.avuser.set('active', self.get_active_tot() + times)
+        self.avuser.set('active_tot', self.get_active_tot() + times)
         self.__now_active += times
 
     def get_level(self):
         'return level'
         while self.get_active() >= self.__need_active:
+            self.__now_active -= self.__need_active
             self.__need_active += 3
             self.__level += 1
-            self.__now_active = 0
         return self.__level
 
     def try_save(self):

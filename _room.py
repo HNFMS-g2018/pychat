@@ -16,6 +16,7 @@ class ChatRoom: # {{{1
         self.printer = _print.Printer()
         self.lastsend = time.time()
         self.lastprint = 0
+        self.__last_level = user.get_level()
         users = self.user_list()
         username = self.user.get_username()
         join_succes = True
@@ -30,7 +31,8 @@ class ChatRoom: # {{{1
         self.todo.set('users', users)
         self.todo.save()
         if join_succes:
-            self.__send('root', username + ' join chat room!')
+            self.__send('root', '{:s}(level {:d}) join chat room!'.format \
+                    (username, self.__last_level))
 
     def __del__(self): # {{{2
         self.mon.tostop()
@@ -117,6 +119,10 @@ class ChatRoom: # {{{1
             else:
                 self.__send(nickname + '  <NICK>', content)
             self.user.add_active(1)
+            if self.user.get_level() > self.__last_level:
+                self.__last_level = self.user.get_level()
+                self.__send('root', '{:s} rise to level {:d}!'.format \
+                        (self.user.get_username(), self.__last_level))
         self.lastsend = time.time()
 
     def user_list(self, fetch=True): # {{{2

@@ -136,25 +136,27 @@ def main(): # {{{1
             room.printall(printroot=False, fetch=fetch)
         elif comres == 'pass':
             newpass = getpass.getpass('new password: ')
-            user.set_password(newpass)
-            user.save()
+            user.change_password(newpass)
         elif comres == 'em':
             _user.email(user)
         elif comres == 'nick':
             nickname = input('nick name(empty to be back): ')
         else:
             room.printnew(fetch=fetch)
-        if cominfo != '':
-            print(cominfo)
+        print(cominfo)
         if comres == 'who':
             print(room.user_list())
+        print('Level:{:d} Active:{:d}/{:d}'.format \
+                (user.get_level(), user.get_active(), user.get_active_need()))
+        print(colorama.Cursor.UP(2), end='')
         if config.get('line') in ('', None):
             con = input('Input yours(input :h to get help)$ ')
         else:
             con = input(config.get('line'))
         print(colorama.Cursor.UP(1), end='')
         print('                                                                                ')
-        print(colorama.Cursor.UP(1), end='')
+        print('                                                                                ')
+        print(colorama.Cursor.UP(2), end='')
         if not room.exist(): # room.todo fetch there
             print()
             print('Sorry, you must leave now')

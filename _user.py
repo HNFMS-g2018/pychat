@@ -23,7 +23,14 @@ class User: # {{{1
 
     def get_active(self):
         'return active'
-        return self.avuser.get('active')
+        res = self.avuser.get('active')
+        if not res:
+            res = 0
+        return res
+
+    def get_active_need(self):
+        'return active needed'
+        return self.__need_active
 
     def add_active(self, times):
         'active += [times]'
@@ -57,6 +64,11 @@ class User: # {{{1
         'fetch data'
         self.avuser.fetch()
 
+    def change_password(self, newpass):
+        'change password to [newpass]'
+        self.avuser.set_password(newpass)
+        self.try_save()
+
 def login_register(user, types): # {{{1
     'get a user'
     try:
@@ -75,7 +87,7 @@ def login_register(user, types): # {{{1
                 raise UserError('There\' difference between the two password')
             if name.count(' '):
                 raise UserError('Space is not allow')
-            user.sign_up(name, passwd)
+            user.register(name, passwd)
         else:
             return 1
     except (AV.errors.LeanCloudError, UserError) as err:

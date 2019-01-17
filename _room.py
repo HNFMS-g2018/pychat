@@ -44,9 +44,7 @@ class ChatRoom: # {{{1
             users.remove(username)
         self.todo.set('users', users)
         self.todo.save()
-        _messagebox.info(self.user.get_username())
-        # self.user.try_save()
-        _messagebox.info(self.user.get_username())
+        self.user.try_save()
         if quit_succes:
             self.__send('root', self.user.get_username() + ' quit chat room!')
 

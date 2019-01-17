@@ -107,7 +107,7 @@ def command(comms): # {{{1
 
 def main(): # {{{1
     'Main function'
-    user = _user.USer()
+    user = _user.User()
     welcome()
     if _user.init(user, ARGS, config) == 1:
         print('failed')

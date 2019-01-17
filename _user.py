@@ -9,25 +9,25 @@ class UserError(Exception):
     def __init__(self, value):
         Exception.__init__(self, value)
 
-class USer(AV.User):
+class User: # {{{1
     'user of leancloud'
-    def __init__(self, onlyusername=None):
-        AV.User.__init__(self)
+    def __init__(self):
+        self.avuser = AV.User()
         self.__level = 0
         self.__need_active = 1
-        if onlyusername:
-            self.set_username(onlyusername)
-            self.onlyusername = True
-        else:
-            self.onlyusername = False
+        self.logined = None
+
+    def get_username(self):
+        'return username'
+        return self.avuser.get_username()
 
     def get_active(self):
         'return active'
-        return self.get('active')
+        return self.avuser.get('active')
 
     def add_active(self, times):
         'active += [times]'
-        self.set('active', self.get_active() + times)
+        self.avuser.set('active', self.get_active() + times)
 
     def get_level(self):
         'return level'
@@ -38,8 +38,24 @@ class USer(AV.User):
 
     def try_save(self):
         'try to save'
-        if not self.onlyusername:
-            self.save()
+        if self.logined:
+            self.avuser.save()
+
+    def login(self, username, password=None):
+        'login'
+        if password:
+            self.avuser.login(username, password)
+            self.logined = True
+        else:
+            self.avuser.set_username(username)
+
+    def register(self, username, password):
+        'register'
+        self.avuser.sign_up(username, password)
+
+    def fetch(self):
+        'fetch data'
+        self.avuser.fetch()
 
 def login_register(user, types): # {{{1
     'get a user'
@@ -59,9 +75,7 @@ def login_register(user, types): # {{{1
                 raise UserError('There\' difference between the two password')
             if name.count(' '):
                 raise UserError('Space is not allow')
-            user.set_username(name)
-            user.set_password(passwd)
-            user.sign_up()
+            user.sign_up(name, passwd)
         else:
             return 1
     except (AV.errors.LeanCloudError, UserError) as err:

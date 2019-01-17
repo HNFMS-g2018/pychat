@@ -14,7 +14,8 @@ class User: # {{{1
     def __init__(self):
         self.avuser = AV.User()
         self.__level = 0
-        self.__need_active = 1
+        self.__need_active = 3
+        self.__now_active = 0
         self.logined = None
 
     def get_username(self):
@@ -23,6 +24,10 @@ class User: # {{{1
 
     def get_active(self):
         'return active'
+        return self.__now_active
+
+    def get_active_tot(self):
+        'return total active'
         res = self.avuser.get('active')
         if not res:
             res = 0
@@ -34,13 +39,15 @@ class User: # {{{1
 
     def add_active(self, times):
         'active += [times]'
-        self.avuser.set('active', self.get_active() + times)
+        self.avuser.set('active', self.get_active_tot() + times)
+        self.__now_active += times
 
     def get_level(self):
         'return level'
-        while self.get_active() > self.__need_active:
-            self.__need_active *= 2
+        while self.get_active() >= self.__need_active:
+            self.__need_active += 3
             self.__level += 1
+            self.__now_active = 0
         return self.__level
 
     def try_save(self):
@@ -55,14 +62,18 @@ class User: # {{{1
             self.logined = True
         else:
             self.avuser.set_username(username)
+        self.try_fetch()
+        self.__now_active = self.get_active_tot()
 
     def register(self, username, password):
         'register'
         self.avuser.sign_up(username, password)
+        self.login(username, password)
 
-    def fetch(self):
-        'fetch data'
-        self.avuser.fetch()
+    def try_fetch(self):
+        'try to fetch data'
+        if self.logined:
+            self.avuser.fetch()
 
     def change_password(self, newpass):
         'change password to [newpass]'

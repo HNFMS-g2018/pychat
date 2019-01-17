@@ -146,7 +146,7 @@ def main(): # {{{1
         print(cominfo)
         if comres == 'who':
             print(room.user_list())
-        print('Level:{:d} Active:{:d}/{:d}'.format \
+        print('Level:{:d} Active:{:d}({:d} to level up)'.format \
                 (user.get_level(), user.get_active(), user.get_active_need()))
         print(colorama.Cursor.UP(2), end='')
         if config.get('line') in ('', None):

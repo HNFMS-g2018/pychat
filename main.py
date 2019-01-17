@@ -143,9 +143,11 @@ def main(): # {{{1
             nickname = input('nick name(empty to be back): ')
         else:
             room.printnew(fetch=fetch)
-        print(cominfo)
+        if cominfo != '':
+            print(cominfo)
         if comres == 'who':
             print(room.user_list())
+        print()
         print('Level:{:d} Active:{:d}({:d} to level up)'.format \
                 (user.get_level(), user.get_active(), user.get_active_need()))
         print(colorama.Cursor.UP(2), end='')
@@ -170,7 +172,8 @@ def main(): # {{{1
             comres, cominfo = command(con[1:])
             fetch = False
         elif con[0] == '!':
-            os.system(con[1:])
+            os.system('sleep 0.5; ' + con[1:])
+            print()
             print()
             fetch = False
         elif con[0] == '@':
